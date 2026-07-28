@@ -1,4 +1,5 @@
 import React from 'react'
+import { ThemeToggle } from './ThemeToggle'
 
 interface TitleBarProps {
   title: string
@@ -16,10 +17,13 @@ export function TitleBar({ title, icon = '💻', active = true }: TitleBarProps)
         <span className="text-base select-none">{icon}</span>
         <span className="truncate">{title}</span>
       </div>
-      <div className="title-bar-controls select-none">
-        <button aria-label="Minimize" title="Minimize" />
-        <button aria-label="Maximize" title="Maximize" />
-        <button aria-label="Close" title="Close" />
+      <div className="flex items-center gap-2">
+        <ThemeToggle />
+        <div className="title-bar-controls select-none">
+          <button aria-label="Minimize" title="Minimize" />
+          <button aria-label="Maximize" title="Maximize" />
+          <button aria-label="Close" title="Close" />
+        </div>
       </div>
     </div>
   )

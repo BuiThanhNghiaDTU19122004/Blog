@@ -8,32 +8,45 @@ interface DesktopLayoutProps {
 
 export function DesktopLayout({ children }: DesktopLayoutProps) {
   return (
-    <div className="min-h-screen bg-[#008080] text-black relative pb-14 font-win98 selection:bg-[#000080] selection:text-white">
+    <div className="min-h-screen bg-[var(--bg-desktop)] text-[var(--text-main)] relative pb-14 font-win98 selection:bg-[var(--accent-primary)] selection:text-black transition-colors duration-200">
       {/* Subtle CRT Scanline & Vignette Effect */}
       <div className="crt-overlay" />
 
       {/* Main Desktop Container */}
-      <div className="p-3 sm:p-6 md:p-8 max-w-7xl mx-auto flex flex-col lg:flex-row gap-6 items-start relative z-10">
-
-        {/* Desktop Left Icon Column */}
-        <aside className="w-full lg:w-44 flex lg:flex-col flex-wrap gap-4 select-none shrink-0 border-b lg:border-b-0 border-teal-700 pb-4 lg:pb-0">
+      <div className="p-2 sm:p-4 md:p-6 max-w-7xl mx-auto flex flex-col lg:flex-row gap-4 items-start relative z-10">
+        
+        {/* Compact Thin Desktop Left Rail */}
+        <aside className="w-full lg:w-16 flex lg:flex-col flex-row flex-wrap justify-around lg:justify-start gap-2 select-none shrink-0 bg-[var(--bg-surface-subtle)] lg:bg-transparent p-1.5 lg:p-0 border-b lg:border-b-0 border-gray-600 rounded-sm">
           <Link
             href="/"
-            className="flex lg:flex-col items-center gap-2 p-2 hover:bg-white/20 rounded text-white text-center focus:bg-[#000080] focus:border focus:border-dashed focus:border-white group cursor-pointer"
+            title="My Computer (Home Grid)"
+            className="flex flex-col items-center justify-center p-1.5 hover:bg-white/20 rounded text-white text-center focus:bg-[var(--accent-primary)] focus:border focus:border-dashed focus:border-white group cursor-pointer w-12"
           >
-            <span className="text-3xl sm:text-4xl filter drop-shadow">🖥️</span>
-            <span className="text-xs font-semibold drop-shadow-md text-white group-hover:underline">
-              My Computer
+            <span className="text-2xl sm:text-3xl filter drop-shadow">🖥️</span>
+            <span className="text-[10px] font-semibold text-[var(--text-main)] lg:text-white group-hover:underline truncate max-w-full">
+              Home
             </span>
           </Link>
 
           <Link
-            href="/"
-            className="flex lg:flex-col items-center gap-2 p-2 hover:bg-white/20 rounded text-white text-center focus:bg-[#000080] focus:border focus:border-dashed focus:border-white group cursor-pointer"
+            href="/posts"
+            title="Blog Posts File Explorer"
+            className="flex flex-col items-center justify-center p-1.5 hover:bg-white/20 rounded text-white text-center focus:bg-[var(--accent-primary)] focus:border focus:border-dashed focus:border-white group cursor-pointer w-12"
           >
-            <span className="text-3xl sm:text-4xl filter drop-shadow">📁</span>
-            <span className="text-xs font-semibold drop-shadow-md text-white group-hover:underline">
-              Blog Posts
+            <span className="text-2xl sm:text-3xl filter drop-shadow">📁</span>
+            <span className="text-[10px] font-semibold text-[var(--text-main)] lg:text-white group-hover:underline truncate max-w-full">
+              Posts
+            </span>
+          </Link>
+
+          <Link
+            href="/about"
+            title="About Me (profile.exe)"
+            className="flex flex-col items-center justify-center p-1.5 hover:bg-white/20 rounded text-white text-center focus:bg-[var(--accent-primary)] focus:border focus:border-dashed focus:border-white group cursor-pointer w-12"
+          >
+            <span className="text-2xl sm:text-3xl filter drop-shadow">👤</span>
+            <span className="text-[10px] font-semibold text-[var(--text-main)] lg:text-white group-hover:underline truncate max-w-full">
+              About
             </span>
           </Link>
 
@@ -41,18 +54,22 @@ export function DesktopLayout({ children }: DesktopLayoutProps) {
             href="https://github.com/BuiThanhNghiaDTU19122004"
             target="_blank"
             rel="noreferrer"
-            className="flex lg:flex-col items-center gap-2 p-2 hover:bg-white/20 rounded text-white text-center focus:bg-[#000080] focus:border focus:border-dashed focus:border-white group cursor-pointer"
+            title="GitHub Repository"
+            className="flex flex-col items-center justify-center p-1.5 hover:bg-white/20 rounded text-white text-center focus:bg-[var(--accent-primary)] focus:border focus:border-dashed focus:border-white group cursor-pointer w-12"
           >
-            <span className="text-3xl sm:text-4xl filter drop-shadow">🌐</span>
-            <span className="text-xs font-semibold drop-shadow-md text-white group-hover:underline">
-              GitHub.exe
+            <span className="text-2xl sm:text-3xl filter drop-shadow">🌐</span>
+            <span className="text-[10px] font-semibold text-[var(--text-main)] lg:text-white group-hover:underline truncate max-w-full">
+              GitHub
             </span>
           </a>
 
-          <div className="flex lg:flex-col items-center gap-2 p-2 hover:bg-white/20 rounded text-white text-center focus:bg-[#000080] focus:border focus:border-dashed focus:border-white group cursor-pointer opacity-75">
-            <span className="text-3xl sm:text-4xl filter drop-shadow">🗑️</span>
-            <span className="text-xs font-semibold drop-shadow-md text-white group-hover:underline">
-              Recycle Bin
+          <div
+            title="Recycle Bin"
+            className="hidden lg:flex flex-col items-center justify-center p-1.5 hover:bg-white/20 rounded text-white text-center focus:bg-[var(--accent-primary)] focus:border focus:border-dashed focus:border-white group cursor-pointer opacity-75 w-12"
+          >
+            <span className="text-2xl sm:text-3xl filter drop-shadow">🗑️</span>
+            <span className="text-[10px] font-semibold lg:text-white group-hover:underline truncate max-w-full">
+              Trash
             </span>
           </div>
         </aside>
@@ -63,7 +80,7 @@ export function DesktopLayout({ children }: DesktopLayoutProps) {
         </main>
       </div>
 
-      {/* Retro Win98 Taskbar */}
+      {/* Retro Taskbar */}
       <Taskbar />
     </div>
   )

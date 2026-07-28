@@ -1,81 +1,71 @@
-# Personal Dev Blog
+# Retro Developer Desktop Blog (Windows 98 CRT Theme)
 
-Blog cá nhân được tối ưu hóa hiệu năng, xây dựng bằng **Next.js (App Router)**, **MDX**, **Tailwind CSS v4** và triển khai miễn phí trên **Vercel**.
+An optimized technical developer blog built with **Next.js (App Router)**, **MDX**, **Tailwind CSS v4**, and **98.css**.
 
-<!-- ponytail: minimal, clear developer documentation -->
+## 🚀 Local Development
 
-## 🚀 Hướng Dẫn Chạy Ở Local (Local Development)
-
-### 1. Cài đặt thư viện
-Yêu cầu môi trường: **Node.js 18+**
+### 1. Installation
+Prerequisite: **Node.js 18+**
 
 ```bash
 npm install
 ```
 
-### 2. Khởi chạy máy chủ thử nghiệm (Development Server)
+### 2. Run Development Server
+
 ```bash
 npm run dev
 ```
-Mở trình duyệt truy cập: [http://localhost:3000](http://localhost:3000)
 
-### 3. Kiểm tra Build Production (Static Site Generation)
+Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+### 3. Production Build & Static Site Generation (SSG)
+
 ```bash
 npm run build
 ```
 
 ---
 
-## ✍️ Hướng Dẫn Viết Bài Mới
+## ✍️ Writing New Posts
 
-Để tạo bài viết mới, bạn tạo 1 file `.mdx` trong thư mục `posts/` (ví dụ: `posts/bai-viet-moi.mdx`).
+To create a new article, add a `.mdx` file inside the `posts/` directory (e.g. `posts/my-new-post.mdx`).
 
-### Cấu trúc bài viết chuẩn (MDX Frontmatter):
+### MDX Frontmatter Format:
 
-```mdx
+```markdown
 ---
-title: "Tiêu đề bài viết của bạn"
-description: "Mô tả ngắn gọn nội dung bài viết"
+title: "Your Article Title"
+description: "A short summary of the article content"
 date: "2026-07-28"
-tags: ["Nextjs", "Tailwind", "MDX"]
+tags: ["nextjs", "react", "architecture"]
 ---
 
-## Nội dung chính bài viết
+## First Section Title
 
-Bạn có thể sử dụng cú pháp **Markdown** thông thường và chèn các thẻ HTML / React Component trực tiếp ở đây.
-
-```tsx
-const hello = "World"
-console.log(hello)
-```
+Article content written in standard Markdown or MDX...
 ```
 
-Mọi bài viết thêm vào thư mục `posts/` sẽ tự động hiển thị trên Trang chủ và tạo đường dẫn tĩnh tại `/posts/slug-ten-file`.
+Every `.mdx` file added to `posts/` will automatically be indexed on the main Explorer home window and pre-rendered statically at `/posts/slug`.
 
 ---
 
-## 🛠️ Cấu Trúc Dự Án
+## 🛠️ Project Structure
 
-```text
-├── app/                  # App Router Next.js (pages, layouts, globals.css)
-│   ├── posts/[slug]/     # Trang hiển thị chi tiết bài viết MDX
-│   └── page.tsx          # Trang chủ danh sách bài viết
-├── lib/                  # Helper đọc file MDX (fs + gray-matter)
-├── posts/                # Thư mục chứa các bài viết dạng .mdx
-├── components/           # UI Components (shadcn/ui, custom components)
-├── mdx-components.tsx    # Cấu hình thẻ HTML/Component cho MDX
-└── next.config.mjs       # Cấu hình Next.js với @next/mdx
 ```
-
----
-
-## 🌐 Triển Khai Lên Vercel (Deployment)
-
-1. Push mã nguồn lên repository **GitHub** của bạn:
-   ```bash
-   git add .
-   git commit -m "Add new blog post"
-   git push origin main
-   ```
-2. Kết nối repo GitHub với [Vercel.com](https://vercel.com).
-3. Vercel sẽ tự động phát hiện Next.js và deploy mỗi khi bạn `git push`.
+.
+├── app/
+│   ├── about/            # About Me page route
+│   ├── posts/[slug]/     # MDX Article detail route & Table of Contents
+│   ├── globals.css       # Win98 CSS, typography & CRT overlay
+│   ├── layout.tsx        # Root layout with next/font setup
+│   └── page.tsx          # Win98 File Explorer homepage
+├── components/
+│   └── win98/            # Win98 Window, Taskbar, TableOfContents, FileExplorer
+├── lib/
+│   ├── mdx-components.tsx# Custom MDX tags & typography rules
+│   └── posts.ts          # MDX parser & TOC heading generator
+├── posts/                # Markdown / MDX blog posts
+└── public/
+    └── images/           # Assets (icons & post images)
+```

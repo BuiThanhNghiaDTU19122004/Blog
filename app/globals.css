@@ -1,4 +1,3 @@
-@import url('https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&family=VT323&display=swap');
 @import "tailwindcss";
 @import "98.css/dist/98.css";
 @plugin "@tailwindcss/typography";
@@ -7,29 +6,70 @@
 @theme components;
 @theme utilities;
 
-:root {
+/* Cyber-Retro Blue & Emerald - Light Mode */
+:root, [data-theme="light"] {
   color-scheme: light;
-  --font-win98: "Pixelify Sans", "MS Sans Serif", "Microsoft Sans Serif", Tahoma, sans-serif;
-  --font-crt: 'VT323', monospace;
+  --bg-desktop: #008080; /* Classic Win98 Teal */
+  --bg-surface: #ffffff; /* Crisp White surface */
+  --bg-surface-subtle: #f1f5f9;
+  --bg-surface-card: #ffffff;
+  --bg-surface-inset: #ffffff;
+  --border-chrome: #c0c0c0;
+  --border-shadow: #cbd5e1;
+  --border-dark: #94a3b8;
+  --text-main: #0f172a; /* Deep Charcoal Slate - maximum contrast */
+  --text-muted: #475569;
+  --titlebar-bg: linear-gradient(90deg, #000080, #0284c7);
+  --titlebar-text: #ffffff;
+  --accent-primary: #0284c7; /* Classic Royal Blue */
+  --accent-secondary: #059669; /* Emerald Green */
+  --accent-info: #0284c7;
+  --accent-error: #dc2626;
+  --terminal-bg: #0f172a;
+  --terminal-text: #34d399;
 }
 
-/* ponytail: pixel-art cursor data URI for Win98 cursor */
+/* Cyber-Retro Blue & Emerald - Dark Mode */
+[data-theme="dark"] {
+  color-scheme: dark;
+  --bg-desktop: #0b132b; /* Deep Space Navy */
+  --bg-surface: #111827; /* Rich Dark Slate surface */
+  --bg-surface-subtle: #1f2937;
+  --bg-surface-card: #1f2937;
+  --bg-surface-inset: #0f172a;
+  --border-chrome: #1f2937;
+  --border-shadow: #374151;
+  --border-dark: #4b5563;
+  --text-main: #f8fafc; /* Crisp Bright Light Slate */
+  --text-muted: #94a3b8;
+  --titlebar-bg: linear-gradient(90deg, #1e3a8a, #0284c7);
+  --titlebar-text: #ffffff;
+  --accent-primary: #38bdf8; /* Sky Cyan Accent */
+  --accent-secondary: #34d399; /* Emerald Green Accent */
+  --accent-info: #38bdf8;
+  --accent-error: #f87171;
+  --terminal-bg: #090d16;
+  --terminal-text: #34d399;
+}
+
+/* Custom Retro Pixel Cursors */
 * {
-  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="%23000" d="M0,0 L0,15 L4,11 L7,16 L9,15 L6,10 L11,10 Z"/><path fill="%23fff" d="M1,2 L1,12 L3,10 L6,14 L7,13 L4,9 L8,9 Z"/></svg>'), auto !important;
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="%23000" d="M0,0 L0,15 L4,11 L7,16 L9,15 L6,10 L11,10 Z"/><path fill="%23fff" d="M1,2 L1,12 L3,10 L6,14 L7,13 L4,9 L8,9 Z"/></svg>') 0 0, auto !important;
 }
 
-button, a, input, select, label {
-  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="%23000" d="M4,0 L7,0 L7,2 L4,2 Z M3,2 L8,2 L8,4 L3,4 Z M3,4 L9,4 L9,6 L3,6 Z M1,6 L10,6 L10,9 L8,9 Z M1,6 L10,6 L10,9 L8,9 L8,11 L6,11 L6,14 L3,14 L3,9 L1,9 Z"/><path fill="%23fff" d="M4,1 L6,1 L6,2 L4,2 Z M4,3 L7,3 L7,4 L4,4 Z M4,5 L8,5 L8,6 L4,6 Z M2,7 L9,7 L9,8 L7,8 L7,10 L5,10 L5,13 L4,13 L4,8 L2,8 Z"/></svg>'), pointer !important;
+button, a, input, select, label, [role="button"] {
+  cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16"><path fill="%23000" d="M4,0 L7,0 L7,2 L4,2 Z M3,2 L8,2 L8,4 L3,4 Z M3,4 L9,4 L9,6 L3,6 Z M1,6 L10,6 L10,9 L8,9 L8,11 L6,11 L6,14 L3,14 L3,9 L1,9 Z M1,6 L10,6 L10,9 L8,9 L8,11 L6,11 L6,14 L3,14 L3,9 L1,9 Z"/><path fill="%23fff" d="M4,1 L6,1 L6,2 L4,2 Z M4,3 L7,3 L7,4 L4,4 Z M4,5 L8,5 L8,6 L4,6 Z M2,7 L9,7 L9,8 L7,8 L7,10 L5,10 L5,13 L4,13 L4,8 L2,8 Z"/></svg>') 0 0, pointer !important;
 }
 
 html, body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
-  background-color: #008080; /* Win98 classic teal desktop wallpaper */
-  font-family: var(--font-win98);
-  color: #000000;
-  -webkit-font-smoothing: none;
+  background-color: var(--bg-desktop);
+  font-family: var(--font-sans), system-ui, sans-serif;
+  color: var(--text-main);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 /* CRT Scanline Overlay */
@@ -43,67 +83,115 @@ html, body {
   z-index: 9999;
   background: linear-gradient(
     rgba(18, 16, 16, 0) 50%, 
-    rgba(0, 0, 0, 0.08) 50%
+    rgba(0, 0, 0, 0.05) 50%
   );
   background-size: 100% 4px;
-  box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.2);
+}
+
+.font-sans {
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+.font-heading {
+  font-family: var(--font-heading), sans-serif;
+}
+
+.font-mono {
+  font-family: var(--font-mono), monospace;
 }
 
 .font-win98 {
-  font-family: var(--font-win98);
+  font-family: var(--font-win98), "MS Sans Serif", Tahoma, sans-serif;
 }
 
-.font-crt {
-  font-family: var(--font-crt);
+.font-hero {
+  font-family: var(--font-hero), monospace;
 }
 
-/* Responsiveness overrides for 98.css windows on mobile */
+/* Responsiveness & Gruvbox Window Styling Overrides */
 .window-responsive {
   max-width: 100%;
   width: 100%;
   box-sizing: border-box;
 }
 
-/* Terminal & Code Block styling adhering to WCAG AA */
+.window {
+  background-color: var(--bg-surface) !important;
+  color: var(--text-main) !important;
+  border-color: var(--border-dark) !important;
+}
+
+.title-bar {
+  background: var(--titlebar-bg) !important;
+  color: var(--titlebar-text) !important;
+}
+
+.window-body {
+  background-color: var(--bg-surface) !important;
+  color: var(--text-main) !important;
+}
+
+/* Terminal & Code Block styling */
 .terminal-block {
-  background-color: #0a0e0a !important;
-  color: #00ff66 !important;
-  font-family: var(--font-crt) !important;
-  font-size: 1.15rem !important;
-  line-height: 1.5 !important;
-  border: 2px solid #555555;
-  box-shadow: inset 2px 2px 0 #000, inset -1px -1px 0 #888;
+  background-color: var(--terminal-bg) !important;
+  color: var(--terminal-text) !important;
+  font-family: var(--font-mono), monospace !important;
+  font-size: 0.95rem !important;
+  line-height: 1.6 !important;
+  border: 2px solid var(--border-shadow);
+  box-shadow: inset 2px 2px 0 #000, inset -1px -1px 0 #333;
 }
 
 .terminal-block code {
-  color: #00ff66 !important;
+  color: var(--terminal-text) !important;
   background: transparent !important;
+  font-family: var(--font-mono), monospace !important;
 }
 
-/* Post detail prose adjustments for Win98 window body */
-.win98-prose h1, .win98-prose h2, .win98-prose h3 {
-  font-family: var(--font-crt);
-  color: #000080;
+/* Article Prose Typography Rules */
+.win98-prose h1 {
+  font-family: var(--font-heading), sans-serif;
+  font-weight: 700;
+  font-size: 2.25rem; /* 36px */
+  color: var(--accent-primary);
+  letter-spacing: -0.02em;
+}
+
+.win98-prose h2 {
+  font-family: var(--font-heading), sans-serif;
+  font-weight: 700;
+  font-size: 1.65rem; /* 26.4px */
+  color: var(--accent-primary);
+  letter-spacing: -0.01em;
+}
+
+.win98-prose h3 {
+  font-family: var(--font-heading), sans-serif;
+  font-weight: 700;
+  font-size: 1.25rem; /* 20px */
+  color: var(--accent-secondary);
 }
 
 .win98-prose p, .win98-prose li {
-  font-family: var(--font-crt);
-  font-size: 1.25rem;
-  line-height: 1.6;
-  color: #111111;
+  font-family: var(--font-sans), sans-serif;
+  font-size: 1.05rem; /* ~17px */
+  line-height: 1.75;
+  color: var(--text-main);
 }
 
 .win98-prose a {
-  color: #0000ff;
+  color: var(--accent-primary);
   text-decoration: underline;
+  font-weight: 600;
 }
 
 .win98-prose a:visited {
-  color: #800080;
+  color: var(--accent-secondary);
 }
 
 /* Selection color */
 ::selection {
-  background: #000080;
+  background: var(--accent-primary);
   color: #ffffff;
 }

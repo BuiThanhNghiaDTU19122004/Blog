@@ -1,28 +1,31 @@
 ---
-title: 'Chào mừng đến với blog'
-description: 'Bài viết đầu tiên trên blog sử dụng Next.js, MDX và Tailwind.'
-date: '2026-07-27'
-tags: ['welcome', 'mdx', 'nextjs']
+title: 'Welcome to the Developer Desktop Blog'
+description: 'First post on the blog built with Next.js App Router, MDX, and Tailwind CSS.'
+date: '2026-07-28'
+tags: ['welcome', 'nextjs', 'mdx']
 ---
 
-# Chào mừng
+## Welcome to the Retro Developer Blog
 
-Đây là bài viết đầu tiên của bạn. Bạn có thể viết bài bằng tệp `*.mdx` trong thư mục `posts`.
+This is your first MDX blog post. You can compose new articles by creating `*.mdx` files inside the `posts` directory.
 
-## Viết bài theo kiểu GitHub
+### Markdown & Code Integration
 
-Bạn có thể đặt cấu trúc bài viết, code snippet, danh sách, bảng, và link.
+You can structure your posts using GitHub Flavored Markdown, inline code snippets, tables, blockquotes, and custom React components:
 
-```tsx
-function Hello() {
-  return <div>Hello world</div>
+```typescript
+// Sample TypeScript interface
+export interface BlogAuthor {
+  name: string
+  role: string
+  skills: string[]
+}
+
+const author: BlogAuthor = {
+  name: 'Developer',
+  role: 'Software Architect',
+  skills: ['Next.js', 'React', 'TypeScript', 'Tailwind'],
 }
 ```
 
-- GitHub Actions
-- Next.js App Router
-- MDX Articles
-- Tailwind + shadcn/ui
-- Vercel (Free)
-
-> Blog đã sẵn sàng để deploy.
+> The blog is fully configured and ready for production deployment on Vercel or GitHub Pages.

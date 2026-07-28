@@ -1,35 +1,35 @@
 import { getAllPosts } from '@/lib/posts'
 import { Window } from '@/components/win98/Window'
-import { FileExplorer } from '@/components/win98/FileExplorer'
+import { PostExplorer } from '@/components/win98/PostExplorer'
 
 export default function HomePage() {
   const posts = getAllPosts()
 
   return (
     <Window
-      title="Exploring - C:\Blog\Posts"
-      icon="📁"
-      address="C:\Blog\Posts"
-      statusText={`${posts.length} object(s) in folder`}
+      title="My Computer - [C:\Blog\Home]"
+      icon="🖥️"
+      address="C:\Blog\Home"
+      statusText={`System status: Online | ${posts.length} article(s) indexed`}
     >
-      <div className="space-y-4 font-win98">
-        {/* Header Banner inside window */}
-        <div className="bg-[#000080] text-white p-4 border-2 border-gray-800 shadow-sm flex flex-wrap items-center justify-between gap-4">
+      <div className="space-y-6">
+        {/* Hero Title Banner */}
+        <div className="bg-[var(--bg-surface-subtle)] text-[var(--text-main)] p-4 sm:p-5 border-2 border-gray-700 shadow-sm flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h1 className="text-2xl font-bold font-crt tracking-wide flex items-center gap-2">
-              <span className="text-yellow-300">⚡</span> RETRO DEVELOPER BLOG [WIN98 EDITION]
+            <h1 className="text-xl sm:text-2xl font-bold font-hero text-[var(--accent-primary)] tracking-tight leading-normal">
+              RETRO DEVELOPER BLOG [WIN98 EDITION]
             </h1>
-            <p className="text-xs text-gray-200 mt-1 font-win98">
-              Technical notes, Next.js, MDX & software architecture. Select a file below to read.
+            <p className="text-xs font-sans text-[var(--text-muted)] mt-2">
+              Technical articles on Next.js App Router, React Server Components, and Cloud Systems.
             </p>
           </div>
-          <div className="bg-[#c0c0c0] text-black px-3 py-1 text-xs border border-white font-mono font-bold">
-            MS-DOS 6.22 / WIN98
+          <div className="bg-[var(--accent-primary)] text-white px-3 py-1 text-xs border border-black font-mono font-bold select-none">
+            CYBER-BLUE / WIN98
           </div>
         </div>
 
-        {/* File Explorer listing posts as .md files */}
-        <FileExplorer posts={posts} />
+        {/* Post Explorer Component (Search, Collections, Most Read, Cards View Default) */}
+        <PostExplorer posts={posts} showMostRead={true} />
       </div>
     </Window>
   )
