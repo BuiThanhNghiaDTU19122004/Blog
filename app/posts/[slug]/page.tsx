@@ -1,25 +1,30 @@
-import { allPosts } from 'contentlayer/generated'
+import path from 'path'
+import fs from 'fs'
+import matter from 'gray-matter'
 import { notFound } from 'next/navigation'
 import { MDXComponents } from '@/lib/mdx-components'
-import { useMDXComponent } from 'next-contentlayer/hooks'
+import { getPostSlugs, getPostMeta } from '@/lib/posts'
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 export function generateStaticParams() {
-  return allPosts.map((post) => ({ slug: post.slug }))
+  return getPostSlugs().map((slug) => ({ slug }))
 }
 
-export default function PostPage({ params }: PageProps) {
-  const post = allPosts.find((post) => post.slug === params.slug)
+// ponytail: Next.js 15+ async params handling for static post rendering
+export default async function PostPage({ params }: PageProps) {
+  const { slug } = await params
+  const post = getPostMeta(slug)
   if (!post) {
     notFound()
   }
 
-  const Body = useMDXComponent(post.body.code)
+  const postModule = await import(`../../../posts/${slug}.mdx`)
+  const Content = postModule.default
 
   return (
     <main className="min-h-screen px-6 py-10 sm:px-10">
@@ -31,7 +36,7 @@ export default function PostPage({ params }: PageProps) {
           <p className="mt-3 text-sm text-slate-500">{new Date(post.date).toLocaleDateString('vi-VN')}</p>
         </header>
         <div className="prose prose-invert max-w-none space-y-6 text-slate-200">
-          <Body components={MDXComponents} />
+          <Content components={MDXComponents} />
         </div>
       </article>
     </main>

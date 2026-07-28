@@ -1,6 +1,9 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme base;
+@theme components;
+@theme utilities;
 
 :root {
   color-scheme: light;

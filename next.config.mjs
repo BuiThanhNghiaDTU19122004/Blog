@@ -1,8 +1,13 @@
-import { withContentlayer } from 'next-contentlayer'
+import createMDX from '@next/mdx'
 
+// ponytail: minimal Next.js config with MDX support
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
-  pageExtensions: ['ts', 'tsx', 'md', 'mdx'],
+  pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
 }
 
-export default withContentlayer(nextConfig)
+const withMDX = createMDX({})
+
+export default withMDX(nextConfig)
+

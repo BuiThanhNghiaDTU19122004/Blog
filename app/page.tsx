@@ -1,8 +1,8 @@
 import Link from 'next/link'
-import { allPosts } from 'contentlayer/generated'
+import { getAllPosts } from '@/lib/posts'
 
 export default function HomePage() {
-  const posts = allPosts.sort((a, b) => Number(new Date(b.date)) - Number(new Date(a.date)))
+  const posts = getAllPosts()
 
   return (
     <main className="min-h-screen px-6 py-10 sm:px-10">
@@ -11,7 +11,7 @@ export default function HomePage() {
           <p className="text-sm uppercase tracking-[0.35em] text-sky-400/80">Blog cá nhân</p>
           <h1 className="mt-4 text-5xl font-bold tracking-tight text-white">Viết blog với Next.js + MDX</h1>
           <p className="mt-6 max-w-2xl text-lg leading-8 text-slate-300">
-            Blog này sử dụng GitHub Actions để build, Contentlayer để lấy bài viết MDX và Tailwind cho giao diện đẹp nhẹ.
+            Blog này sử dụng GitHub Actions để build, MDX để viết bài, và Tailwind v4 cho giao diện nhẹ nhàng.
           </p>
         </div>
 
