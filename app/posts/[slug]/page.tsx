@@ -4,6 +4,7 @@ import { MDXComponents } from '@/lib/mdx-components'
 import { getPostSlugs, getPostMeta, getPostHeadings } from '@/lib/posts'
 import { Window } from '@/components/win98/Window'
 import { TableOfContents } from '@/components/win98/TableOfContents'
+import { PostViewBadge } from '@/components/win98/PostViewBadge'
 
 interface PageProps {
   params: Promise<{
@@ -46,6 +47,7 @@ export default async function PostPage({ params }: PageProps) {
           </Link>
 
           <div className="flex items-center gap-2 text-xs font-mono text-[var(--text-muted)]">
+            <PostViewBadge slug={slug} />
             <span className="bg-[var(--bg-surface-subtle)] text-[var(--text-main)] border border-[var(--border-dark)] px-2 py-0.5 shadow-inner">
               UTF-8
             </span>
@@ -74,7 +76,8 @@ export default async function PostPage({ params }: PageProps) {
                 </span>
               </div>
 
-              <h1 className="text-3xl sm:text-4xl font-bold font-crt text-[var(--accent-primary)] leading-tight">
+              {/* ponytail: compact title size to prevent oversized post headings */}
+              <h1 className="text-xl sm:text-2xl font-bold font-crt text-[var(--accent-primary)] leading-snug">
                 {post.title}
               </h1>
 
