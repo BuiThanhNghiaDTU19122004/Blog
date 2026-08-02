@@ -96,7 +96,7 @@ export const MDXComponents = {
     />
   ),
   pre: ({ className, children, ...props }: ComponentPropsWithoutRef<'pre'>) => (
-    <div className="my-6 border-2 border-gray-700 shadow-md">
+    <div className="my-6 border-2 border-[var(--border-dark)] shadow-md">
       {/* Terminal Title Bar */}
       <div className="bg-[var(--accent-primary)] text-white px-3 py-1 text-xs font-win98 font-bold flex items-center justify-between select-none">
         <div className="flex items-center gap-2">
@@ -114,5 +114,26 @@ export const MDXComponents = {
         {children}
       </pre>
     </div>
+  ),
+  // ponytail: theme-aware table components for high contrast MDX tables
+  table: ({ className, ...props }: ComponentPropsWithoutRef<'table'>) => (
+    <div className="overflow-x-auto my-6 border border-[var(--border-dark)]">
+      <table className={`w-full border-collapse text-sm font-sans text-[var(--text-main)] ${className ?? ''}`} {...props} />
+    </div>
+  ),
+  thead: ({ className, ...props }: ComponentPropsWithoutRef<'thead'>) => (
+    <thead className={`bg-[var(--bg-surface-subtle)] border-b-2 border-[var(--border-dark)] ${className ?? ''}`} {...props} />
+  ),
+  tbody: ({ className, ...props }: ComponentPropsWithoutRef<'tbody'>) => (
+    <tbody className={`divide-y divide-[var(--border-dark)] ${className ?? ''}`} {...props} />
+  ),
+  tr: ({ className, ...props }: ComponentPropsWithoutRef<'tr'>) => (
+    <tr className={`even:bg-[var(--bg-surface-subtle)]/50 ${className ?? ''}`} {...props} />
+  ),
+  th: ({ className, ...props }: ComponentPropsWithoutRef<'th'>) => (
+    <th className={`px-4 py-2 text-left font-bold text-[var(--accent-primary)] border-r border-[var(--border-dark)] last:border-r-0 ${className ?? ''}`} {...props} />
+  ),
+  td: ({ className, ...props }: ComponentPropsWithoutRef<'td'>) => (
+    <td className={`px-4 py-2 border-r border-[var(--border-dark)] last:border-r-0 ${className ?? ''}`} {...props} />
   ),
 }
