@@ -45,11 +45,11 @@ export default async function PostPage({ params }: PageProps) {
             <span>Back to Explorer</span>
           </Link>
 
-          <div className="flex items-center gap-2 text-xs font-mono text-gray-700">
-            <span className="bg-white border border-gray-500 px-2 py-0.5 shadow-inner">
+          <div className="flex items-center gap-2 text-xs font-mono text-[var(--text-muted)]">
+            <span className="bg-[var(--bg-surface-subtle)] text-[var(--text-main)] border border-[var(--border-dark)] px-2 py-0.5 shadow-inner">
               UTF-8
             </span>
-            <span className="bg-white border border-gray-500 px-2 py-0.5 shadow-inner">
+            <span className="bg-[var(--bg-surface-subtle)] text-[var(--text-main)] border border-[var(--border-dark)] px-2 py-0.5 shadow-inner">
               Markdown
             </span>
           </div>
@@ -57,11 +57,11 @@ export default async function PostPage({ params }: PageProps) {
 
         {/* 2-Column Content Layout: Article Body + Sticky TOC Sidebar */}
         <div className="flex flex-col lg:flex-row gap-6 items-start">
-          {/* Main Article Body Column */}
-          <article className="flex-1 w-full min-w-0 bg-white border-2 border-gray-800 border-t-gray-900 border-l-gray-900 p-4 sm:p-6 shadow-inner">
-            <header className="border-b-2 border-gray-200 pb-4 mb-6">
-              <div className="flex flex-wrap items-center gap-2 text-xs font-mono text-gray-600 mb-2">
-                <span className="bg-[#000080] text-white px-2 py-0.5 font-bold">
+          {/* Main Article Body Column - ponytail: theme-aware surface & text colors for dark mode contrast */}
+          <article className="flex-1 w-full min-w-0 bg-[var(--bg-surface-inset)] text-[var(--text-main)] border-2 border-[var(--border-dark)] p-4 sm:p-6 shadow-inner">
+            <header className="border-b-2 border-[var(--border-shadow)] pb-4 mb-6">
+              <div className="flex flex-wrap items-center gap-2 text-xs font-mono text-[var(--text-muted)] mb-2">
+                <span className="bg-[var(--accent-primary)] text-white px-2 py-0.5 font-bold">
                   TECHNICAL POST
                 </span>
                 <span>•</span>
@@ -74,12 +74,12 @@ export default async function PostPage({ params }: PageProps) {
                 </span>
               </div>
 
-              <h1 className="text-3xl sm:text-4xl font-bold font-crt text-[#000080] leading-tight">
+              <h1 className="text-3xl sm:text-4xl font-bold font-crt text-[var(--accent-primary)] leading-tight">
                 {post.title}
               </h1>
 
               {post.description && (
-                <p className="mt-3 text-base sm:text-lg font-body text-gray-700 italic border-l-2 border-gray-400 pl-3">
+                <p className="mt-3 text-base sm:text-lg font-body text-[var(--text-muted)] italic border-l-2 border-[var(--accent-primary)] pl-3">
                   {post.description}
                 </p>
               )}
@@ -89,7 +89,7 @@ export default async function PostPage({ params }: PageProps) {
                   {post.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="text-xs font-mono bg-[#c0c0c0] text-black border border-gray-600 px-2 py-0.5"
+                      className="text-xs font-mono bg-[var(--bg-surface-subtle)] text-[var(--text-main)] border border-[var(--border-dark)] px-2 py-0.5"
                     >
                       #{tag}
                     </span>
