@@ -3,7 +3,6 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { VisitorCounter } from './VisitorCounter'
 
 export function Taskbar() {
   const pathname = usePathname()
@@ -142,8 +141,6 @@ export function Taskbar() {
 
         {/* System Tray */}
         <div className="flex items-center gap-2 pl-2 border-l border-gray-400">
-          <VisitorCounter />
-
           <div className="border-2 border-gray-600 border-t-gray-800 border-l-gray-800 bg-[var(--bg-surface)] px-2 py-0.5 text-xs font-mono font-semibold shadow-inner text-[var(--text-main)]">
             {time || '12:00 PM'}
           </div>
