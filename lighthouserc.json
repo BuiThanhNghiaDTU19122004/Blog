@@ -4,7 +4,10 @@
       "startServerCommand": "npm run start -- -H 127.0.0.1 -p 3000",
       "startServerReadyPattern": "Ready in|started server on|Local:",
       "startServerReadyTimeout": 60000,
-      "url": ["http://127.0.0.1:3000/"]
+      "url": ["http://127.0.0.1:3000/"],
+      "settings": {
+        "chromeFlags": "--no-sandbox --disable-gpu --ignore-certificate-errors"
+      }
     },
     "upload": {
       "target": "temporary-public-storage"

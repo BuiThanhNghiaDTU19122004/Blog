@@ -97,5 +97,13 @@ jobs:
           name: build-out
           path: .
 
+      - name: Build and smoke-test server manually
+        run: |
+          npm run build
+          npm run start -- -H 127.0.0.1 -p 3000 &
+          sleep 8
+          curl -v http://127.0.0.1:3000/ || true
+          curl -v -I http://127.0.0.1:3000/ || true
+
       - name: Run Lighthouse CI
         uses: treosh/lighthouse-ci-action@v12
