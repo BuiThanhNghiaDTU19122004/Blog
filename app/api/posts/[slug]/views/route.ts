@@ -45,7 +45,8 @@ interface RouteParams {
 export async function GET(_request: Request, { params }: RouteParams) {
   const { slug } = await params
   const viewsMap = await readAllViews()
-  const count = viewsMap[slug] ?? 100
+  // ponytail: fallback to 0 views for unread posts instead of hardcoded 100
+  const count = viewsMap[slug] ?? 0
 
   return NextResponse.json({ slug, views: count })
 }
@@ -53,7 +54,8 @@ export async function GET(_request: Request, { params }: RouteParams) {
 export async function POST(_request: Request, { params }: RouteParams) {
   const { slug } = await params
   const viewsMap = await readAllViews()
-  const current = viewsMap[slug] ?? 100
+  // ponytail: fallback to 0 initial views before incrementing
+  const current = viewsMap[slug] ?? 0
   const updated = current + 1
 
   viewsMap[slug] = updated

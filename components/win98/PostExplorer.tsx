@@ -84,7 +84,7 @@ export function PostExplorer({ posts, showMostRead = true }: PostExplorerProps) 
     return [...posts]
       .map((post) => ({
         ...post,
-        views: postViews[post.slug] ?? 100,
+        views: postViews[post.slug] ?? 0,
       }))
       .sort((a, b) => b.views - a.views)
       .slice(0, 2)
@@ -254,7 +254,7 @@ export function PostExplorer({ posts, showMostRead = true }: PostExplorerProps) 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {filteredPosts.map((post) => {
             const readTime = Math.max(3, Math.ceil(post.title.length / 8))
-            const realViews = postViews[post.slug] ?? 100
+            const realViews = postViews[post.slug] ?? 0
 
             return (
               <article
@@ -347,7 +347,7 @@ export function PostExplorer({ posts, showMostRead = true }: PostExplorerProps) 
             </thead>
             <tbody>
               {filteredPosts.map((post) => {
-                const realViews = postViews[post.slug] ?? 100
+                const realViews = postViews[post.slug] ?? 0
                 return (
                   <tr
                     key={post.slug}
