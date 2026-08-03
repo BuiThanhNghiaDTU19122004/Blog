@@ -19,25 +19,7 @@ export const slugify = (node: React.ReactNode): string => {
   return ''
 }
 
-// Helper function to detect and prevent rendering raw frontmatter strings in MDX content
-const isFrontmatterNode = (node: React.ReactNode): boolean => {
-  if (typeof node === 'string') {
-    const text = node.trim()
-    return (
-      (text.includes('title:') && text.includes('description:')) ||
-      text.startsWith('title:') ||
-      text.startsWith('description:') ||
-      text.startsWith('date:')
-    )
-  }
-  if (Array.isArray(node)) {
-    return node.some(isFrontmatterNode)
-  }
-  if (node && typeof node === 'object' && 'props' in node) {
-    return isFrontmatterNode((node as { props: { children?: React.ReactNode } }).props.children)
-  }
-  return false
-}
+// Removed isFrontmatterNode hack - handled by remark-frontmatter
 
 export const MDXComponents = {
   a: ({ className, ...props }: ComponentPropsWithoutRef<'a'>) => (
@@ -84,10 +66,6 @@ export const MDXComponents = {
   },
   hr: () => null,
   p: ({ className, children, ...props }: ComponentPropsWithoutRef<'p'>) => {
-    // ponytail: omit unparsed raw frontmatter metadata text inside MDX body
-    if (isFrontmatterNode(children)) {
-      return null
-    }
     return (
       <p
         className={`font-sans text-[1.05rem] text-[var(--text-main)] leading-[1.75] my-4 ${className ?? ''}`}

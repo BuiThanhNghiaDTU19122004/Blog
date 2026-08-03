@@ -335,9 +335,9 @@ export function PostExplorer({ posts, showMostRead = true }: PostExplorerProps) 
       ) : viewMode === 'details' ? (
         /* Details Table List View */
         <div className="bg-[var(--bg-surface-inset)] border-2 border-gray-700 p-2 overflow-x-auto shadow-inner">
-          <table className="w-full text-left text-xs border-collapse font-win98">
+          <table className="w-full text-left text-xs border-collapse font-win98 bg-transparent">
             <thead>
-              <tr className="bg-[var(--bg-surface-subtle)] border-b border-gray-400 select-none text-[var(--text-main)]">
+              <tr className="select-none text-black">
                 <th className="p-2 border-r border-gray-300 font-bold">Name</th>
                 <th className="p-2 border-r border-gray-300 font-bold hidden sm:table-cell">Views</th>
                 <th className="p-2 border-r border-gray-300 font-bold hidden md:table-cell">Size</th>

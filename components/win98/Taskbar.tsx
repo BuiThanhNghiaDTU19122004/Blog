@@ -3,8 +3,6 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { VisitorCounter } from './VisitorCounter'
-
 export function Taskbar() {
   const pathname = usePathname()
   const [time, setTime] = useState<string>('')
@@ -61,15 +59,13 @@ export function Taskbar() {
                 <span className="text-sm">About Me (profile.exe)</span>
               </Link>
               <div className="border-t border-gray-400 my-1" />
-              <a
-                href="https://github.com/BuiThanhNghiaDTU19122004"
-                target="_blank"
-                rel="noreferrer"
+              <Link
+                href="/github"
                 className="flex items-center gap-2 p-1.5 hover:bg-[var(--accent-primary)] hover:text-black rounded-none cursor-pointer text-[var(--text-main)]"
               >
                 <span>🐙</span>
                 <span className="text-sm">GitHub Profile</span>
-              </a>
+              </Link>
               <div className="border-t border-gray-400 my-1" />
               <div className="p-1.5 text-xs text-gray-500 font-mono">
                 Next.js App Router Blog <br />
@@ -142,8 +138,6 @@ export function Taskbar() {
 
         {/* System Tray */}
         <div className="flex items-center gap-2 pl-2 border-l border-gray-400">
-          <VisitorCounter />
-
           <div className="border-2 border-gray-600 border-t-gray-800 border-l-gray-800 bg-[var(--bg-surface)] px-2 py-0.5 text-xs font-mono font-semibold shadow-inner text-[var(--text-main)]">
             {time || '12:00 PM'}
           </div>

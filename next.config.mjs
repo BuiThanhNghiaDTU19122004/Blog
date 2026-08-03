@@ -7,7 +7,10 @@ const nextConfig = {
   pageExtensions: ['js', 'jsx', 'md', 'mdx', 'ts', 'tsx'],
 }
 
-const withMDX = createMDX({})
+const withMDX = createMDX({
+  options: {
+    remarkPlugins: ['remark-frontmatter', 'remark-mdx-frontmatter'],
+  },
+})
 
 export default withMDX(nextConfig)
-
