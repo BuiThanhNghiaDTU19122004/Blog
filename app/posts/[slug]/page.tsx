@@ -61,11 +61,50 @@ export default async function PostPage({ params }: PageProps) {
         <div className="flex flex-col lg:flex-row gap-6 items-start">
           {/* Main Article Body Column - ponytail: theme-aware surface & text colors for dark mode contrast */}
           <article className="flex-1 w-full min-w-0 bg-[var(--bg-surface-inset)] text-[var(--text-main)] border-2 border-[var(--border-dark)] p-4 sm:p-6 shadow-inner">
-            <header className="border-b-2 border-[var(--border-shadow)] pb-4 mb-6">
-              <div className="flex flex-wrap items-center gap-2 text-xs font-mono text-[var(--text-muted)] mb-2">
-                <span className="bg-[var(--accent-primary)] text-white px-2 py-0.5 font-bold">
-                  TECHNICAL POST
-                </span>
+            {/* ponytail: modern clean header layout matching reference design */}
+            <header className="border-b border-[var(--border-shadow)] pb-5 mb-6 space-y-3">
+              {/* Breadcrumb Navigation Path */}
+              <div className="flex items-center gap-1.5 text-xs font-sans text-[var(--text-muted)] truncate">
+                <Link href="/" className="hover:underline text-[var(--text-muted)] no-underline">
+                  Blog
+                </Link>
+                <span>&gt;</span>
+                <span className="truncate text-[var(--text-main)] font-medium">{post.title}</span>
+              </div>
+
+              {/* Tag Pill Badges */}
+              {post.tags && post.tags.length > 0 && (
+                <div className="flex flex-wrap gap-2 pt-1">
+                  {post.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className="text-xs font-mono font-semibold px-2.5 py-0.5 rounded-full bg-[var(--accent-primary)]/15 text-[var(--accent-primary)] border border-[var(--accent-primary)]/30 uppercase tracking-wide"
+                    >
+                      #{tag}
+                    </span>
+                  ))}
+                </div>
+              )}
+
+              {/* Modern Compact Post Title (fixed scrolling issue from oversized font) */}
+              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold font-heading text-[var(--text-main)] leading-tight tracking-tight pt-1">
+                {post.title}
+              </h1>
+
+              {post.description && (
+                <p className="text-xs sm:text-sm font-sans text-[var(--text-muted)] italic border-l-2 border-[var(--accent-primary)] pl-3 py-0.5">
+                  {post.description}
+                </p>
+              )}
+
+              {/* Author & Post Metadata Bar */}
+              <div className="flex flex-wrap items-center gap-2 sm:gap-3 text-xs font-mono text-[var(--text-muted)] pt-2 border-t border-[var(--border-shadow)]/40 mt-3">
+                <div className="flex items-center gap-2">
+                  <div className="w-5 h-5 rounded-full bg-[var(--accent-primary)] text-white font-bold text-[10px] flex items-center justify-center border border-black shadow-xs">
+                    NB
+                  </div>
+                  <span className="font-bold text-[var(--text-main)]">Nghia Bui</span>
+                </div>
                 <span>•</span>
                 <span>
                   {new Date(post.date).toLocaleDateString('en-US', {
@@ -74,31 +113,11 @@ export default async function PostPage({ params }: PageProps) {
                     day: 'numeric',
                   })}
                 </span>
+                <span>•</span>
+                <span>{Math.max(3, Math.ceil(post.title.length / 8))} min read</span>
+                <span>•</span>
+                <PostViewBadge slug={slug} />
               </div>
-
-              {/* ponytail: compact title size to prevent oversized post headings */}
-              <h1 className="text-xl sm:text-2xl font-bold font-crt text-[var(--accent-primary)] leading-snug">
-                {post.title}
-              </h1>
-
-              {post.description && (
-                <p className="mt-3 text-base sm:text-lg font-body text-[var(--text-muted)] italic border-l-2 border-[var(--accent-primary)] pl-3">
-                  {post.description}
-                </p>
-              )}
-
-              {post.tags && post.tags.length > 0 && (
-                <div className="mt-4 flex flex-wrap gap-1">
-                  {post.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="text-xs font-mono bg-[var(--bg-surface-subtle)] text-[var(--text-main)] border border-[var(--border-dark)] px-2 py-0.5"
-                    >
-                      #{tag}
-                    </span>
-                  ))}
-                </div>
-              )}
             </header>
 
             {/* MDX Content using JetBrains Mono body & VT323 headings */}

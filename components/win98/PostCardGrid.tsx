@@ -1,4 +1,6 @@
-import React from 'react'
+'use client'
+
+import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import { PostMeta } from '@/lib/posts'
 
@@ -6,8 +8,26 @@ interface PostCardGridProps {
   posts: PostMeta[]
 }
 
-// ponytail: card grid view component for homepage differentiation
+// ponytail: card grid view component for homepage with real post views (0 fallback for unread)
 export function PostCardGrid({ posts }: PostCardGridProps) {
+  const [postViews, setPostViews] = useState<Record<string, number>>({})
+
+  useEffect(() => {
+    let isMounted = true
+    fetch('/api/posts/views')
+      .then((res) => res.json())
+      .then((data) => {
+        if (isMounted && data && typeof data === 'object') {
+          setPostViews(data)
+        }
+      })
+      .catch((err) => console.error('Error fetching post views:', err))
+
+    return () => {
+      isMounted = false
+    }
+  }, [])
+
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-2 border-b border-gray-400 pb-2">
@@ -20,9 +40,9 @@ export function PostCardGrid({ posts }: PostCardGridProps) {
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {posts.map((post, idx) => {
+        {posts.map((post) => {
           const readTime = Math.max(3, Math.ceil(post.title.length / 8))
-          const viewCount = 1000 + (idx * 1420 + 342) % 3500
+          const viewCount = postViews[post.slug] ?? 0
 
           return (
             <article
