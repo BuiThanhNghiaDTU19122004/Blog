@@ -7,9 +7,9 @@ export default function PostsPage() {
 
   return (
     <Window
-      title="Exploring - C:\Blog\Posts"
+      title="Exploring - C:\BuiThanhNghiaDev\Posts"
       icon="📁"
-      address="C:\Blog\Posts"
+      address="C:\BuiThanhNghiaDev\Posts"
       statusText={`${posts.length} object(s) in directory`}
     >
       <div className="space-y-6 font-sans">

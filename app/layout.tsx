@@ -42,8 +42,8 @@ const pressStart2P = Press_Start_2P({
 })
 
 export const metadata: Metadata = {
-  title: 'C:\\Blog\\Explorer - Retro Dev Desktop',
-  description: 'Windows 98 CRT Technical Developer Blog',
+  title: 'C:\\BuiThanhNghiaDev\\Explorer - Retro Dev Desktop',
+  description: 'BuiThanhNghiaDev - Windows 98 Retro Technical Developer Workstation',
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

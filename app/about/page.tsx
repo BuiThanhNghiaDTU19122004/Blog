@@ -6,7 +6,7 @@ export default function AboutPage() {
     <Window
       title="User Profile - [profile.exe]"
       icon="👤"
-      address="C:\Blog\User\profile.exe"
+      address="C:\BuiThanhNghiaDev\User\profile.exe"
       statusText="User status: Online | System Memory: 640KB OK"
     >
       <div className="space-y-6">

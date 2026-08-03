@@ -30,9 +30,9 @@ export default async function PostPage({ params }: PageProps) {
 
   return (
     <Window
-      title={`Notepad - [${slug}.md]`}
+      title={`BuiThanhNghiaDev Notepad - [C:\\BuiThanhNghiaDev\\Posts\\${slug}.md]`}
       icon="📄"
-      address={`C:\\Blog\\Posts\\${slug}.md`}
+      address={`C:\\BuiThanhNghiaDev\\Posts\\${slug}.md`}
       statusText={`Document: ${post.title} | Modified: ${post.date}`}
     >
       <div className="space-y-6">
@@ -61,12 +61,12 @@ export default async function PostPage({ params }: PageProps) {
         <div className="flex flex-col lg:flex-row gap-6 items-start">
           {/* Main Article Body Column - ponytail: theme-aware surface & text colors for dark mode contrast */}
           <article className="flex-1 w-full min-w-0 bg-[var(--bg-surface-inset)] text-[var(--text-main)] border-2 border-[var(--border-dark)] p-4 sm:p-6 shadow-inner">
-            {/* ponytail: modern clean header layout matching reference design */}
-            <header className="border-b border-[var(--border-shadow)] pb-5 mb-6 space-y-3">
+            {/* ponytail: modern clean header layout with compact title size */}
+            <header className="border-b border-[var(--border-shadow)] pb-4 mb-5 space-y-2">
               {/* Breadcrumb Navigation Path */}
               <div className="flex items-center gap-1.5 text-xs font-sans text-[var(--text-muted)] truncate">
                 <Link href="/" className="hover:underline text-[var(--text-muted)] no-underline">
-                  Blog
+                  BuiThanhNghiaDev Blog
                 </Link>
                 <span>&gt;</span>
                 <span className="truncate text-[var(--text-main)] font-medium">{post.title}</span>
@@ -74,11 +74,11 @@ export default async function PostPage({ params }: PageProps) {
 
               {/* Tag Pill Badges */}
               {post.tags && post.tags.length > 0 && (
-                <div className="flex flex-wrap gap-2 pt-1">
+                <div className="flex flex-wrap gap-1.5 pt-0.5">
                   {post.tags.map((tag) => (
                     <span
                       key={tag}
-                      className="text-xs font-mono font-semibold px-2.5 py-0.5 rounded-full bg-[var(--accent-primary)]/15 text-[var(--accent-primary)] border border-[var(--accent-primary)]/30 uppercase tracking-wide"
+                      className="text-[11px] font-mono font-semibold px-2 py-0.5 rounded-full bg-[var(--accent-primary)]/15 text-[var(--accent-primary)] border border-[var(--accent-primary)]/30 uppercase tracking-wide"
                     >
                       #{tag}
                     </span>
@@ -86,8 +86,8 @@ export default async function PostPage({ params }: PageProps) {
                 </div>
               )}
 
-              {/* Modern Compact Post Title (fixed scrolling issue from oversized font) */}
-              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold font-heading text-[var(--text-main)] leading-tight tracking-tight pt-1">
+              {/* Compact Article Title (fixed scrolling issue) */}
+              <h1 className="text-base sm:text-lg font-bold font-sans text-[var(--accent-primary)] leading-snug tracking-tight py-1">
                 {post.title}
               </h1>
 
