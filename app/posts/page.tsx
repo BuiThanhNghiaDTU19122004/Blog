@@ -16,7 +16,7 @@ export default function PostsPage() {
         {/* Explorer Header Banner - ponytail: compact header banner proportions */}
         <div className="bg-[var(--bg-surface-subtle)] p-3 border-2 border-gray-700 shadow-sm flex flex-wrap items-center justify-between gap-2">
           <div>
-            <h1 className="text-sm sm:text-base font-bold font-heading text-[var(--accent-primary)] flex items-center gap-2">
+            <h1 className="text-sm sm:text-lg lg:text-xl font-bold font-hero tracking-tight text-[var(--accent-primary)] flex items-center gap-2">
               <span>📁</span> Article Explorer & Directory Index
             </h1>
             <p className="text-[11px] text-[var(--text-muted)] mt-0.5">
