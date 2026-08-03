@@ -32,7 +32,7 @@ export default async function PostPage({ params }: PageProps) {
     <Window
       title={`Notepad - [${slug}.md]`}
       icon="📄"
-      address={`C:\\Blog\\Posts\\${slug}.md`}
+      address={`C:\\BuiThanhNghiaDev\\Posts\\${slug}.md`}
       statusText={`Document: ${post.title} | Modified: ${post.date}`}
     >
       <div className="space-y-6">
@@ -86,8 +86,7 @@ export default async function PostPage({ params }: PageProps) {
                 </div>
               )}
 
-              {/* Modern Compact Post Title (fixed scrolling issue from oversized font) */}
-              <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold font-heading text-[var(--text-main)] leading-tight tracking-tight pt-1">
+              <h1 className="text-lg sm:text-xl lg:text-2xl font-bold font-heading text-[var(--text-main)] leading-tight tracking-tight pt-1">
                 {post.title}
               </h1>
 
