@@ -1,4 +1,5 @@
 import React, { type ComponentPropsWithoutRef } from 'react'
+import { Tabs, Tab } from '@/components/win98/CodeTabs'
 
 // Helper function to convert heading text to valid URL element ID
 export const slugify = (node: React.ReactNode): string => {
@@ -22,6 +23,8 @@ export const slugify = (node: React.ReactNode): string => {
 // Removed isFrontmatterNode hack - handled by remark-frontmatter
 
 export const MDXComponents = {
+  Tabs,
+  Tab,
   a: ({ className, ...props }: ComponentPropsWithoutRef<'a'>) => (
     <a
       className={`text-[var(--accent-primary)] font-semibold underline hover:bg-[var(--accent-primary)] hover:text-white px-0.5 ${className ?? ''}`}
