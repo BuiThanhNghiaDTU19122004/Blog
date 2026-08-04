@@ -3,8 +3,10 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+
 export function Taskbar() {
   const pathname = usePathname()
+  const locale = pathname.startsWith('/vi') ? 'vi' : 'en'
   const [time, setTime] = useState<string>('')
   const [startOpen, setStartOpen] = useState(false)
 
@@ -12,7 +14,7 @@ export function Taskbar() {
     const updateTime = () => {
       const now = new Date()
       setTime(
-        now.toLocaleTimeString('en-US', {
+        now.toLocaleTimeString(locale === 'vi' ? 'vi-VN' : 'en-US', {
           hour: '2-digit',
           minute: '2-digit',
           hour12: true,
@@ -22,7 +24,17 @@ export function Taskbar() {
     updateTime()
     const timer = setInterval(updateTime, 1000)
     return () => clearInterval(timer)
-  }, [])
+  }, [locale])
+
+  const homePath = `/${locale}`
+  const postsPath = `/${locale}`
+  const aboutPath = `/${locale}/about`
+  const githubPath = `/${locale}/github`
+
+  const isHomeActive = pathname === homePath || pathname === `/${locale}/`
+  const isPostsActive = pathname.startsWith(`/${locale}/posts`)
+  const isAboutActive = pathname.startsWith(`/${locale}/about`)
+  const isPostDetail = pathname.includes('/posts/')
 
   return (
     <>
@@ -38,29 +50,29 @@ export function Taskbar() {
             </div>
             <div className="flex-1 py-1 px-2 space-y-1">
               <Link
-                href="/"
+                href={homePath}
                 className="flex items-center gap-2 p-1.5 hover:bg-[var(--accent-primary)] hover:text-black rounded-none cursor-pointer text-[var(--text-main)] font-semibold"
               >
                 <span>🖥️</span>
-                <span className="text-sm">Home (Card Grid)</span>
+                <span className="text-sm">{locale === 'vi' ? 'Trang chủ' : 'Home (Card Grid)'}</span>
               </Link>
               <Link
-                href="/posts"
+                href={postsPath}
                 className="flex items-center gap-2 p-1.5 hover:bg-[var(--accent-primary)] hover:text-black rounded-none cursor-pointer text-[var(--text-main)] font-semibold"
               >
                 <span>📁</span>
-                <span className="text-sm">Posts (File Explorer)</span>
+                <span className="text-sm">{locale === 'vi' ? 'Bài viết (Explorer)' : 'Posts (File Explorer)'}</span>
               </Link>
               <Link
-                href="/about"
+                href={aboutPath}
                 className="flex items-center gap-2 p-1.5 hover:bg-[var(--accent-primary)] hover:text-black rounded-none cursor-pointer text-[var(--text-main)] font-semibold"
               >
                 <span>👤</span>
-                <span className="text-sm">About Me (profile.exe)</span>
+                <span className="text-sm">{locale === 'vi' ? 'Giới thiệu (profile.exe)' : 'About Me (profile.exe)'}</span>
               </Link>
               <div className="border-t border-gray-400 my-1" />
               <Link
-                href="/github"
+                href={githubPath}
                 className="flex items-center gap-2 p-1.5 hover:bg-[var(--accent-primary)] hover:text-black rounded-none cursor-pointer text-[var(--text-main)]"
               >
                 <span>🐙</span>
@@ -97,40 +109,40 @@ export function Taskbar() {
           {/* Active Window Button / Navigation Tabs */}
           <div className="flex items-center gap-1 overflow-x-auto">
             <Link
-              href="/"
+              href={homePath}
               className={`flex items-center gap-1.5 px-3 py-0.5 text-xs h-7 max-w-[150px] truncate border-2 ${
-                pathname === '/'
+                isHomeActive
                   ? 'border-black bg-[var(--accent-primary)] text-black font-bold'
                   : 'border-t-white border-l-white border-b-black border-r-black bg-[var(--bg-surface)] text-[var(--text-main)]'
               }`}
             >
               <span>🖥️</span>
-              <span className="truncate">Home</span>
+              <span className="truncate">{locale === 'vi' ? 'Trang chủ' : 'Home'}</span>
             </Link>
 
             <Link
-              href="/posts"
+              href={postsPath}
               className={`flex items-center gap-1.5 px-3 py-0.5 text-xs h-7 max-w-[150px] truncate border-2 ${
-                pathname === '/posts'
+                isPostsActive
                   ? 'border-black bg-[var(--accent-primary)] text-black font-bold'
                   : 'border-t-white border-l-white border-b-black border-r-black bg-[var(--bg-surface)] text-[var(--text-main)]'
               }`}
             >
               <span>📁</span>
-              <span className="truncate">Explorer</span>
+              <span className="truncate">{locale === 'vi' ? 'Bài viết' : 'Explorer'}</span>
             </Link>
 
-            {pathname === '/about' && (
+            {isAboutActive && (
               <div className="flex items-center gap-1.5 px-3 py-0.5 text-xs h-7 max-w-[150px] truncate border-2 border-black bg-[var(--accent-primary)] text-black font-bold">
                 <span>👤</span>
                 <span className="truncate">profile.exe</span>
               </div>
             )}
 
-            {pathname.startsWith('/posts/') && (
+            {isPostDetail && (
               <div className="flex items-center gap-1.5 px-3 py-0.5 text-xs h-7 max-w-[180px] truncate border-2 border-black bg-[var(--accent-primary)] text-black font-bold">
                 <span>📄</span>
-                <span className="truncate">{pathname.replace('/posts/', '')}.md</span>
+                <span className="truncate">{pathname.split('/').pop()}.md</span>
               </div>
             )}
           </div>
