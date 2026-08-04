@@ -6,10 +6,10 @@ import { PostMeta } from '@/lib/posts'
 
 interface PostCardGridProps {
   posts: PostMeta[]
+  locale?: string
 }
 
-// ponytail: card grid view component for homepage with real post views (0 fallback for unread)
-export function PostCardGrid({ posts }: PostCardGridProps) {
+export function PostCardGrid({ posts, locale = 'en' }: PostCardGridProps) {
   const [postViews, setPostViews] = useState<Record<string, number>>({})
 
   useEffect(() => {
@@ -30,15 +30,6 @@ export function PostCardGrid({ posts }: PostCardGridProps) {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-gray-400 pb-2">
-        <h2 className="text-xl font-bold font-win98 text-[var(--accent-primary)] flex items-center gap-2">
-          <span>📰</span> Recent Writing & Featured Articles
-        </h2>
-        <span className="text-xs font-mono text-gray-500">
-          Showing {posts.length} publication(s)
-        </span>
-      </div>
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {posts.map((post) => {
           const readTime = Math.max(3, Math.ceil(post.title.length / 8))
@@ -62,7 +53,7 @@ export function PostCardGrid({ posts }: PostCardGridProps) {
                     </span>
                   </div>
                   <span className="text-xs font-mono text-yellow-100">
-                    {readTime} min read
+                    {readTime} {locale === 'vi' ? 'phút đọc' : 'min read'}
                   </span>
                 </div>
 
@@ -84,7 +75,7 @@ export function PostCardGrid({ posts }: PostCardGridProps) {
 
                   {/* Post Title */}
                   <h3 className="text-xl font-extrabold font-body text-[var(--accent-primary)] group-hover:underline leading-snug">
-                    <Link href={`/posts/${post.slug}`} className="no-underline text-inherit block">
+                    <Link href={`/${locale}/posts/${post.slug}`} className="no-underline text-inherit block">
                       {post.title}
                     </Link>
                   </h3>
@@ -109,13 +100,13 @@ export function PostCardGrid({ posts }: PostCardGridProps) {
                 {/* Publish Date & Views */}
                 <div className="flex items-center gap-3 text-gray-500 font-mono text-[11px]">
                   <span>
-                    {new Date(post.date).toLocaleDateString('en-US', {
+                    {new Date(post.date).toLocaleDateString(locale === 'vi' ? 'vi-VN' : 'en-US', {
                       month: 'short',
                       day: 'numeric',
                     })}
                   </span>
                   <span>•</span>
-                  <span>👁️ {viewCount}</span>
+                  <span>👁️ {viewCount.toLocaleString()} {locale === 'vi' ? 'lượt xem' : 'views'}</span>
                 </div>
               </div>
             </article>
