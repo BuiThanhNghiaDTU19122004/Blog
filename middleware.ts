@@ -1,5 +1,5 @@
 import { NextResponse, type NextRequest } from 'next/server'
-import { locales, defaultLocale } from '@/lib/i18n/dictionary'
+import { locales, defaultLocale, type Locale } from '@/lib/i18n/dictionary'
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl
@@ -24,10 +24,10 @@ export function middleware(request: NextRequest) {
 
   // Determine target locale: cookie preferred, then Accept-Language header, fallback to defaultLocale
   const cookieLocale = request.cookies.get('NEXT_LOCALE')?.value
-  let targetLocale = defaultLocale
+  let targetLocale: Locale = defaultLocale
 
-  if (cookieLocale && locales.includes(cookieLocale as any)) {
-    targetLocale = cookieLocale as any
+  if (cookieLocale && (locales as readonly string[]).includes(cookieLocale)) {
+    targetLocale = cookieLocale as Locale
   } else {
     const acceptLanguage = request.headers.get('accept-language') || ''
     if (acceptLanguage.toLowerCase().includes('vi')) {
