@@ -1,36 +1,67 @@
+import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { MDXComponents } from '@/lib/mdx-components'
 import { getPostSlugs, getPostMeta, getPostHeadings } from '@/lib/posts'
+import { getDictionary, locales } from '@/lib/i18n/dictionary'
 import { Window } from '@/components/win98/Window'
 import { TableOfContents } from '@/components/win98/TableOfContents'
 import { PostViewBadge } from '@/components/win98/PostViewBadge'
 
 interface PageProps {
   params: Promise<{
+    locale: string
     slug: string
   }>
 }
 
-export function generateStaticParams() {
-  return getPostSlugs().map((slug) => ({ slug }))
+export async function generateStaticParams() {
+  const slugs = getPostSlugs()
+  const params: { locale: string; slug: string }[] = []
+
+  locales.forEach((locale) => {
+    slugs.forEach((slug) => {
+      params.push({ locale, slug })
+    })
+  })
+
+  return params
 }
 
-// ponytail: Next.js async params handling preserved for static post rendering
+export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const { locale, slug } = await params
+  const post = getPostMeta(slug, locale)
+  if (!post) return {}
+
+  return {
+    title: post.title,
+    description: post.description,
+    alternates: {
+      canonical: `/${locale}/posts/${slug}`,
+      languages: {
+        en: `/en/posts/${slug}`,
+        vi: `/vi/posts/${slug}`,
+      },
+    },
+  }
+}
+
 export default async function PostPage({ params }: PageProps) {
-  const { slug } = await params
-  const post = getPostMeta(slug)
-  if (!post) {
+  const { locale, slug } = await params
+  const dict = getDictionary(locale)
+  const post = getPostMeta(slug, locale)
+
+  if (!post || !post.resolvedFile) {
     notFound()
   }
 
-  const headings = getPostHeadings(slug)
-  const postModule = await import(`../../../posts/${slug}.mdx`)
+  const headings = getPostHeadings(slug, locale)
+  const postModule = await import(`../../../../posts/${post.resolvedFile}`)
   const Content = postModule.default
 
   return (
     <Window
-      title={`Notepad - [${slug}.md]`}
+      title={`${dict.notepadTitle} - [${slug}.md]`}
       icon="📄"
       address={`C:\\BuiThanhNghiaDev\\Posts\\${slug}.md`}
       statusText={`Document: ${post.title} | Modified: ${post.date}`}
@@ -39,33 +70,40 @@ export default async function PostPage({ params }: PageProps) {
         {/* Navigation & Document Actions */}
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-gray-400 pb-3 font-win98">
           <Link
-            href="/"
+            href={`/${locale}`}
             className="inline-flex items-center gap-1 px-3 py-1 text-xs font-bold border-2 border-t-white border-l-white border-b-black border-r-black bg-[#c0c0c0] active:border-black hover:bg-[#d4d4d4] no-underline text-black"
           >
             <span>⬅️</span>
-            <span>Back to Explorer</span>
+            <span>{dict.backToExplorer}</span>
           </Link>
 
           <div className="flex items-center gap-2 text-xs font-mono text-[var(--text-muted)]">
             <PostViewBadge slug={slug} />
             <span className="bg-[var(--bg-surface-subtle)] text-[var(--text-main)] border border-[var(--border-dark)] px-2 py-0.5 shadow-inner">
-              UTF-8
+              {dict.utf8Label}
             </span>
             <span className="bg-[var(--bg-surface-subtle)] text-[var(--text-main)] border border-[var(--border-dark)] px-2 py-0.5 shadow-inner">
-              Markdown
+              {dict.markdownLabel}
             </span>
           </div>
         </div>
 
+        {/* Translation Fallback Notice */}
+        {post.hasTranslation === false && (
+          <div className="bg-[#fff9c4] dark:bg-[#3c3836] text-[#856404] dark:text-[#fabd2f] border-2 border-[#ffeeba] dark:border-[#d79921] p-3 text-xs font-win98 font-bold flex items-center gap-2 shadow-xs select-none">
+            <span>⚠️</span>
+            <span>{dict.notTranslatedNotice}</span>
+          </div>
+        )}
+
         {/* 2-Column Content Layout: Article Body + Sticky TOC Sidebar */}
         <div className="flex flex-col lg:flex-row gap-6 items-start">
-          {/* Main Article Body Column - ponytail: theme-aware surface & text colors for dark mode contrast */}
+          {/* Main Article Body Column */}
           <article className="flex-1 w-full min-w-0 bg-[var(--bg-surface-inset)] text-[var(--text-main)] border-2 border-[var(--border-dark)] p-4 sm:p-6 shadow-inner">
-            {/* ponytail: modern clean header layout matching reference design */}
             <header className="border-b border-[var(--border-shadow)] pb-5 mb-6 space-y-3">
               {/* Breadcrumb Navigation Path */}
               <div className="flex items-center gap-1.5 text-xs font-sans text-[var(--text-muted)] truncate">
-                <Link href="/" className="hover:underline text-[var(--text-muted)] no-underline">
+                <Link href={`/${locale}`} className="hover:underline text-[var(--text-muted)] no-underline">
                   Blog
                 </Link>
                 <span>&gt;</span>
@@ -106,20 +144,22 @@ export default async function PostPage({ params }: PageProps) {
                 </div>
                 <span>•</span>
                 <span>
-                  {new Date(post.date).toLocaleDateString('en-US', {
+                  {new Date(post.date).toLocaleDateString(locale === 'vi' ? 'vi-VN' : 'en-US', {
                     year: 'numeric',
                     month: 'long',
                     day: 'numeric',
                   })}
                 </span>
                 <span>•</span>
-                <span>{Math.max(3, Math.ceil(post.title.length / 8))} min read</span>
+                <span>
+                  {Math.max(3, Math.ceil(post.title.length / 8))} {dict.readTimeSuffix}
+                </span>
                 <span>•</span>
                 <PostViewBadge slug={slug} />
               </div>
             </header>
 
-            {/* MDX Content using JetBrains Mono body & VT323 headings */}
+            {/* MDX Content */}
             <div className="win98-prose space-y-4">
               <Content components={MDXComponents} />
             </div>

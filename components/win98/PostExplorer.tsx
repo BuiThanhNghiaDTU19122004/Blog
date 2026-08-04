@@ -8,9 +8,10 @@ import { PostMeta } from '@/lib/posts'
 interface PostExplorerProps {
   posts: PostMeta[]
   showMostRead?: boolean
+  locale?: string
 }
 
-export function PostExplorer({ posts, showMostRead = true }: PostExplorerProps) {
+export function PostExplorer({ posts, showMostRead = true, locale = 'en' }: PostExplorerProps) {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCollection, setSelectedCollection] = useState('All')
   const [selectedTag, setSelectedTag] = useState<string>('All')
@@ -213,7 +214,7 @@ export function PostExplorer({ posts, showMostRead = true }: PostExplorerProps) 
             {mostReadPosts.map((post) => (
               <Link
                 key={post.slug}
-                href={`/posts/${post.slug}`}
+                href={`/${locale}/posts/${post.slug}`}
                 className="bg-[var(--bg-surface-card)] border border-gray-600 p-3 hover:border-[var(--accent-primary)] transition-all flex items-start gap-3 no-underline text-inherit group"
               >
                 <div className="text-2xl select-none p-1 bg-[var(--accent-primary)]/10 rounded">
@@ -296,7 +297,7 @@ export function PostExplorer({ posts, showMostRead = true }: PostExplorerProps) 
 
                     {/* Title - ponytail: compact, well-proportioned title size */}
                     <h3 className="text-base sm:text-lg font-bold font-heading text-[var(--accent-primary)] group-hover:underline leading-snug">
-                      <Link href={`/posts/${post.slug}`} className="no-underline text-inherit block">
+                      <Link href={`/${locale}/posts/${post.slug}`} className="no-underline text-inherit block">
                         {post.title}
                       </Link>
                     </h3>
@@ -355,7 +356,7 @@ export function PostExplorer({ posts, showMostRead = true }: PostExplorerProps) 
                   >
                     <td className="p-2 font-semibold">
                       <Link
-                        href={`/posts/${post.slug}`}
+                        href={`/${locale}/posts/${post.slug}`}
                         className="flex items-center gap-2 text-inherit no-underline block"
                       >
                         <span className="text-base select-none">📝</span>
@@ -388,7 +389,7 @@ export function PostExplorer({ posts, showMostRead = true }: PostExplorerProps) 
           {filteredPosts.map((post) => (
             <Link
               key={post.slug}
-              href={`/posts/${post.slug}`}
+              href={`/${locale}/posts/${post.slug}`}
               className="flex flex-col items-center text-center p-3 hover:bg-[var(--accent-primary)] hover:text-white group rounded border border-transparent hover:border-blue-300"
             >
               <div className="w-12 h-14 bg-white border-2 border-gray-400 shadow flex flex-col justify-between p-1 relative mb-2 group-hover:border-white">

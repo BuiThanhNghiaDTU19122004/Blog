@@ -1,23 +1,31 @@
 import Link from 'next/link'
 import { Window } from '@/components/win98/Window'
+import { getDictionary } from '@/lib/i18n/dictionary'
 
-export default function AboutPage() {
+interface AboutPageProps {
+  params: Promise<{ locale: string }>
+}
+
+export default async function AboutPage({ params }: AboutPageProps) {
+  const { locale } = await params
+  const dict = getDictionary(locale)
+
   return (
     <Window
-      title="User Profile - [profile.exe]"
+      title={`User Profile - [profile.exe]`}
       icon="👤"
-      address="C:\Blog\User\profile.exe"
-      statusText="User status: Online | System Memory: 640KB OK"
+      address={`C:\\Blog\\User\\profile.exe`}
+      statusText={`${dict.systemStatus} | System Memory: 640KB OK`}
     >
       <div className="space-y-6">
         {/* Navigation & Header */}
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-gray-400 pb-3 font-win98">
           <Link
-            href="/"
+            href={`/${locale}`}
             className="inline-flex items-center gap-1 px-3 py-1 text-xs font-bold border-2 border-t-white border-l-white border-b-black border-r-black bg-[var(--bg-surface)] active:border-black hover:bg-[var(--bg-surface-subtle)] no-underline text-[var(--text-main)]"
           >
             <span>⬅️</span>
-            <span>Back to Explorer</span>
+            <span>{dict.backToExplorer}</span>
           </Link>
 
           <div className="flex items-center gap-2 text-xs font-mono text-gray-700">
@@ -27,10 +35,8 @@ export default function AboutPage() {
           </div>
         </div>
 
-        {/* Main Content Box using JetBrains Mono Body Typography */}
+        {/* Main Content Box */}
         <div className="bg-[var(--bg-surface-inset)] border-2 border-gray-800 border-t-gray-900 border-l-gray-900 p-4 sm:p-6 shadow-inner space-y-6">
-          
-          {/* Intro Section */}
           <section className="space-y-3">
             <div className="flex items-center gap-3 border-b-2 border-gray-200 pb-2">
               <span className="text-3xl select-none">💻</span>
@@ -45,7 +51,9 @@ export default function AboutPage() {
             </div>
 
             <p className="font-body text-[1.05rem] text-[var(--text-main)] leading-[1.7]">
-              Hello! I am a passionate full-stack developer dedicated to building high-performance, resilient, and beautifully crafted web applications. With a strong interest in modern framework architectures, distributed systems, and nostalgic user interfaces, I blend modern browser capabilities with classic retro aesthetics.
+              {locale === 'vi'
+                ? 'Xin chào! Tôi là một nhà phát triển full-stack đam mê xây dựng các ứng dụng web hiệu năng cao, bền vững và được thiết kế tỉ mỉ. Với sự quan tâm lớn dành cho kiến trúc framework hiện đại, hệ thống phân tán và giao diện hoài niệm, tôi kết hợp sức mạnh trình duyệt hiện đại với thẩm mỹ retro cổ điển.'
+                : 'Hello! I am a passionate full-stack developer dedicated to building high-performance, resilient, and beautifully crafted web applications. With a strong interest in modern framework architectures, distributed systems, and nostalgic user interfaces, I blend modern browser capabilities with classic retro aesthetics.'}
             </p>
           </section>
 
@@ -87,10 +95,6 @@ export default function AboutPage() {
             <h2 className="text-2xl font-bold font-crt text-[var(--accent-primary)] border-b border-gray-300 pb-1">
               📫 Get In Touch & Social Links
             </h2>
-            <p className="font-body text-[1.05rem] text-[var(--text-main)] leading-[1.7]">
-              Feel free to connect or explore my open-source projects across the web:
-            </p>
-
             <div className="flex flex-wrap gap-3 font-win98 text-xs">
               <a
                 href="https://github.com/BuiThanhNghiaDTU19122004"
@@ -101,27 +105,8 @@ export default function AboutPage() {
                 <span>🐙</span>
                 <span>GitHub Profile</span>
               </a>
-
-              <a
-                href="mailto:contact@example.com"
-                className="flex items-center gap-2 px-3 py-1.5 border-2 border-t-white border-l-white border-b-black border-r-black bg-[var(--bg-surface)] hover:bg-[var(--bg-surface-subtle)] text-[var(--text-main)] font-bold no-underline"
-              >
-                <span>✉️</span>
-                <span>Send Email</span>
-              </a>
-
-              <a
-                href="https://linkedin.com"
-                target="_blank"
-                rel="noreferrer"
-                className="flex items-center gap-2 px-3 py-1.5 border-2 border-t-white border-l-white border-b-black border-r-black bg-[var(--bg-surface)] hover:bg-[var(--bg-surface-subtle)] text-[var(--text-main)] font-bold no-underline"
-              >
-                <span>💼</span>
-                <span>LinkedIn</span>
-              </a>
             </div>
           </section>
-
         </div>
       </div>
     </Window>

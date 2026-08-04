@@ -1,5 +1,6 @@
 import React from 'react'
 import { ThemeToggle } from './ThemeToggle'
+import { LanguageToggle } from './LanguageToggle'
 
 interface TitleBarProps {
   title: string
@@ -18,6 +19,7 @@ export function TitleBar({ title, icon = '💻', active = true }: TitleBarProps)
         <span className="truncate">{title}</span>
       </div>
       <div className="flex items-center gap-2">
+        <LanguageToggle />
         <ThemeToggle />
         <div className="title-bar-controls select-none">
           <button aria-label="Minimize" title="Minimize" />

@@ -1,0 +1,31 @@
+---
+title: "Kiến trúc Ứng dụng Web Modern với Next.js App Router và Server Components"
+description: "Phân tích chuyên sâu về React Server Components, mô hình streaming suspense, chiến lược caching và phân định ranh giới component trong Next.js."
+date: "2026-07-28"
+tags: ["nextjs", "react", "architecture", "webdev"]
+---
+
+## Giới thiệu Kiến trúc Next.js App Router
+
+Sự phát triển của kỹ thuật web frontend hiện đại đã thay đổi mạnh mẽ kể từ khi ra mắt Next.js App Router và React Server Components (RSC). Trong nhiều năm, các kiến trúc trang đơn (SPA) đã buộc các nhà phát triển phải lựa chọn giữa rendering hoàn toàn ở phía client với bundle JavaScript nặng nề hoặc rendering truyền thống phía server (SSR) vẽ lại toàn bộ trang ở mỗi request dynamic.
+
+App Router giải quyết sự đánh đổi này bằng cách cung cấp một mô hình thống nhất, nơi các component được thực thi mặc định ở server, truyền dòng HTML tối thiểu và dữ liệu JavaScript chính xác đến trình duyệt.
+
+## Mô hình Server Components vs Client Components
+
+Việc hiểu khi nào và làm thế nào để chia mã nguồn qua ranh giới server-client là kỹ năng thiết kế cốt lõi bắt buộc khi xây dựng ứng dụng App Router. Trong kiến trúc này, các component được xử lý như Server Components theo mặc định ngoại trừ khi được đánh dấu rõ ràng bằng directive `'use client'`.
+
+```tsx
+'use client'
+
+import { useState } from 'react'
+
+export function InteractiveLikeButton({ initialLikes }: { initialLikes: number }) {
+  const [likes, setLikes] = useState(initialLikes)
+  return (
+    <button onClick={() => setLikes(likes + 1)}>
+      👍 {likes} Likes
+    </button>
+  )
+}
+```
