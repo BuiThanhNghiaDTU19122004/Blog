@@ -42,17 +42,17 @@ export function PostCardGrid({ posts, locale = 'en' }: PostCardGridProps) {
             >
               <div>
                 {/* Thumbnail Header Area */}
-                <div className="bg-gradient-to-r from-amber-700 via-yellow-700 to-amber-900 p-4 border-b-2 border-gray-700 flex items-center justify-between select-none relative overflow-hidden">
-                  <div className="absolute right-[-10px] bottom-[-10px] text-6xl opacity-20 pointer-events-none">
+                <div className="bg-gradient-to-r from-blue-900 via-sky-800 to-indigo-900 p-4 border-b-2 border-gray-700 flex items-center justify-between select-none relative overflow-hidden">
+                  <div className="absolute right-[-10px] bottom-[-10px] text-6xl opacity-20 pointer-events-none text-cyan-300">
                     ⚡
                   </div>
                   <div className="flex items-center gap-2">
                     <span className="text-2xl">📄</span>
-                    <span className="text-xs font-mono font-bold text-yellow-200 bg-black/40 px-2 py-0.5 border border-yellow-500/50">
+                    <span className="text-xs font-mono font-bold text-cyan-200 bg-black/40 px-2 py-0.5 border border-cyan-500/50">
                       TECHNICAL NOTE
                     </span>
                   </div>
-                  <span className="text-xs font-mono text-yellow-100">
+                  <span className="text-xs font-mono text-cyan-100">
                     {readTime} {locale === 'vi' ? 'phút đọc' : 'min read'}
                   </span>
                 </div>

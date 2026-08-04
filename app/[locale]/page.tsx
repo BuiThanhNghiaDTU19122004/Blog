@@ -25,7 +25,7 @@ export default async function HomePage({ params }: HomePageProps) {
         {/* Hero Title Banner */}
         <div className="bg-[var(--bg-surface-subtle)] text-[var(--text-main)] p-4 sm:p-5 border-2 border-gray-700 shadow-sm flex flex-wrap items-center justify-between gap-4">
           <div>
-            <h1 className="text-lg sm:text-xl font-bold font-hero text-[var(--accent-primary)] tracking-tight leading-normal">
+            <h1 className="text-lg sm:text-xl font-bold font-heading text-[var(--accent-primary)] tracking-tight leading-normal">
               {dict.blogTitle}
             </h1>
             <p className="text-xs font-sans text-[var(--text-muted)] mt-2">

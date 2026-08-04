@@ -9,7 +9,7 @@ export function DesktopSidebar() {
   const locale = pathname.startsWith('/vi') ? 'vi' : 'en'
 
   const homePath = `/${locale}`
-  const postsPath = `/${locale}`
+  const postsPath = `/${locale}/posts`
   const aboutPath = `/${locale}/about`
   const githubPath = `/${locale}/github`
 

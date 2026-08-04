@@ -27,7 +27,7 @@ export function Taskbar() {
   }, [locale])
 
   const homePath = `/${locale}`
-  const postsPath = `/${locale}`
+  const postsPath = `/${locale}/posts`
   const aboutPath = `/${locale}/about`
   const githubPath = `/${locale}/github`
 
