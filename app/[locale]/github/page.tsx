@@ -13,7 +13,7 @@ export default async function GitHubPage({ params }: GitHubPageProps) {
   return (
     <Window
       title={`GitHub Contributions - [profile.exe]`}
-      icon="🌐"
+      icon="🐱"
       address="https://github.com/BuiThanhNghiaDTU19122004"
       statusText={`${dict.systemStatus} | Fetching contribution data... OK`}
     >

@@ -1,0 +1,154 @@
+/* ═══════════════════════════════════════════════════════
+   HeatmapAnimations.css — animated contribution heatmap
+   REDESIGN: staggered load, scanline sweep, glow pulse,
+   hover scale, cyber-blue palette.
+   ═══════════════════════════════════════════════════════ */
+
+/* ── REDESIGN item 5: Cyber-blue color ramp ──
+   Light → Dark: pale slate → light cyan → cyan → deep blue → navy
+   Tuning: change these colors to adjust the ramp. */
+
+.hm-cell, .hm-legend {
+  width: 12px;
+  height: 12px;
+  border-radius: 2px;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+.hm-none {
+  background-color: #e2e8f0;      /* slate-200 */
+}
+[data-theme="dark"] .hm-none {
+  background-color: #1e293b;      /* slate-800 */
+}
+
+.hm-q1 {
+  background-color: #7dd3fc;      /* sky-300 */
+}
+[data-theme="dark"] .hm-q1 {
+  background-color: #0c4a6e;      /* sky-900 */
+}
+
+.hm-q2 {
+  background-color: #38bdf8;      /* sky-400 — accent */
+}
+[data-theme="dark"] .hm-q2 {
+  background-color: #0369a1;      /* sky-700 */
+}
+
+.hm-q3 {
+  background-color: #0284c7;      /* sky-600 */
+}
+[data-theme="dark"] .hm-q3 {
+  background-color: #38bdf8;      /* sky-400 */
+}
+
+.hm-q4 {
+  background-color: #000080;      /* navy */
+}
+[data-theme="dark"] .hm-q4 {
+  background-color: #7dd3fc;      /* sky-300 */
+}
+
+/* Dark mode border tweak */
+[data-theme="dark"] .hm-cell,
+[data-theme="dark"] .hm-legend {
+  border-color: rgba(255,255,255,0.04);
+}
+
+
+/* ── REDESIGN item 1: Staggered load-in ──
+   Cells scale+fade in sequentially. animation-delay set inline per cell. */
+
+.hm-cell {
+  opacity: 0;
+  transform: scale(0);
+  animation: hm-pop-in 0.3s ease-out forwards;
+}
+
+@keyframes hm-pop-in {
+  0%   { opacity: 0; transform: scale(0); }
+  60%  { transform: scale(1.15); }
+  100% { opacity: 1; transform: scale(1); }
+}
+
+
+/* ── REDESIGN item 3: Hot-streak glow pulse ──
+   Only the highest tier (FOURTH_QUARTILE) pulses. */
+
+.hm-q4 {
+  animation:
+    hm-pop-in 0.3s ease-out forwards,
+    hm-glow 3s ease-in-out 1.5s infinite;
+}
+
+@keyframes hm-glow {
+  0%, 100% { box-shadow: 0 0 0 0 transparent; }
+  50%      { box-shadow: 0 0 6px 2px rgba(56, 189, 248, 0.5); }
+}
+
+
+/* ── REDESIGN item 4: Hover — scale + brighter glow + tooltip ──
+   The native title attribute handles the tooltip. */
+
+.hm-cell {
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  cursor: var(--cursor-pointer) !important;
+}
+
+.hm-cell:hover {
+  transform: scale(1.6);
+  box-shadow: 0 0 8px 3px rgba(56, 189, 248, 0.6);
+  z-index: 10;
+  position: relative;
+}
+
+
+/* ── REDESIGN item 2: CRT scanline sweep ──
+   A translucent gradient bar sweeps across the grid on a 6s loop
+   via a pseudo-element on the grid wrapper. */
+
+.hm-grid-wrap {
+  position: relative;
+  overflow: hidden;
+}
+
+.hm-grid-wrap::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(56, 189, 248, 0.07) 45%,
+    rgba(56, 189, 248, 0.12) 50%,
+    rgba(56, 189, 248, 0.07) 55%,
+    transparent 100%
+  );
+  width: 30%;
+  animation: hm-scanline 6s linear infinite;
+  mix-blend-mode: screen;
+}
+
+@keyframes hm-scanline {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(450%); }
+}
+
+
+/* ── REDESIGN item 6: Reduced motion ──
+   Disable sweep, glow, and pop-in. Cells visible immediately. */
+
+@media (prefers-reduced-motion: reduce) {
+  .hm-cell {
+    animation: none !important;
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .hm-grid-wrap::after {
+    animation: none !important;
+    display: none;
+  }
+}
