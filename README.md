@@ -139,3 +139,16 @@ POST /api/posts/[slug]/views
   ▼
 [Async Write to data/post-views.json] (Caught silently on read-only serverless filesystems)
 ```
+
+### Why This Solution Was Chosen Over Direct File Read/Write
+
+1. **Eliminates Disk I/O Overhead on GET**: Direct file reads on every request introduce unnecessary filesystem latency. Storing view counts in RAM makes `GET` lookups instantaneous (O(1)).
+2. **Prevents Write Race Conditions**: Node's single-threaded event loop guarantees in-memory increments are thread-safe. Serializing disk writes with a promise queue (`writeQueue`) prevents overlapping `fs.writeFile` calls and JSON corruption.
+3. **Lazy Cold-Start Load-Once Pattern**: `ensureViewsLoaded()` caches the initial read promise, ensuring concurrent requests during server startup read `data/post-views.json` exactly once.
+4. **Zero Cloud Dependencies**: Built using standard Node.js libraries (`fs/promises`) following **ponytail** principles (no external Redis/database requirement for personal blogs).
+
+### Serverless & Scale Considerations (Trade-Offs)
+
+- **Per-Instance RAM Isolation**: In multi-instance serverless deployments (e.g. Vercel with auto-scaling lambdas), each container instance maintains its own in-memory cache.
+- **Eventual Consistency**: View counts are eventually consistent per server instance. For a personal blog, trading global multi-region consistency for zero database costs and 0ms GET response speed is an intentional design choice.
+- **Scaling Up**: If the blog scales to high traffic across distributed serverless nodes, `lib/views.ts` can be upgraded to an external serverless KV store (such as Vercel KV or Upstash Redis) using the exact same interface signatures (`getPostViews` and `incrementPostViews`).
