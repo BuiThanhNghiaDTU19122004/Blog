@@ -1,0 +1,236 @@
+/* ═══════════════════════════════════════════════════════
+   AmbientRails.css — decorative side-gutter layer
+   ponytail: CSS-first, no canvas/WebGL, no external deps.
+
+   BUG 2 FIX: all stray sprite styles removed.
+   REDESIGN: light mode = circuit-trace screensaver.
+
+   TUNING KNOBS:
+   - Star count/positions: box-shadow lists in --far / --near
+   - Star colors: white / rgba(56,189,248,…) cyan tints
+   - Moon size: .ambient-moon width/height
+   - Trace speed: stroke-dashoffset animation duration
+   - Trace color: --trace-color variable
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Container: fixed full-viewport, behind everything ── */
+.ambient-rails {
+  position: fixed;
+  inset: 0;
+  z-index: 1;                /* behind main UI (z-10) */
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* ── Hide when viewport too narrow for gutters ── */
+@media (max-width: 1199px) {
+  .ambient-rails { display: none; }
+}
+
+/* ── Theme switching: show/hide layers via data-theme ── */
+.ambient-dark { display: none; }
+.ambient-light { display: none; }
+
+[data-theme="dark"] .ambient-dark  { display: block; }
+[data-theme="light"] .ambient-light { display: block; }
+
+/* Fallback for system preference when no data-theme */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) .ambient-dark  { display: block; }
+}
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme]) .ambient-light { display: block; }
+}
+
+/* ═══════════════════════════════════════════════════════
+   DARK MODE — Starry sky + Moon (unchanged, this worked)
+   ═══════════════════════════════════════════════════════ */
+
+/* Moon: soft crescent near top-left rail */
+.ambient-moon {
+  position: fixed;
+  top: 80px;
+  left: 40px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #f0f0e8 0%, #e2e0c8 60%, #c8c4a0 100%);
+  box-shadow:
+    0 0 12px 4px rgba(248, 250, 252, 0.25),
+    0 0 40px 12px rgba(56, 189, 248, 0.08);
+  opacity: 0.85;
+}
+/* Crescent shadow — overlapping dark circle */
+.ambient-moon::after {
+  content: '';
+  position: absolute;
+  top: -4px;
+  left: 8px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: var(--bg-desktop, #0b132b);
+}
+
+/* Stars: two depth layers via multi-box-shadow */
+.ambient-stars {
+  position: fixed;
+  inset: 0;
+  width: 1px;
+  height: 1px;
+}
+
+/* Far stars — dim, slow 6s twinkle */
+.ambient-stars--far {
+  animation: twinkle-far 6s ease-in-out infinite;
+  box-shadow:
+    /* Left rail */
+    15px 50px 0 0 rgba(255,255,255,0.3),
+    72px 130px 0 0 rgba(255,255,255,0.25),
+    45px 220px 0 0 rgba(56,189,248,0.2),
+    90px 310px 0 0 rgba(255,255,255,0.2),
+    28px 400px 0 0 rgba(255,255,255,0.3),
+    60px 480px 0 0 rgba(56,189,248,0.15),
+    100px 560px 0 0 rgba(255,255,255,0.2),
+    35px 650px 0 0 rgba(255,255,255,0.25),
+    80px 740px 0 0 rgba(56,189,248,0.2),
+    20px 830px 0 0 rgba(255,255,255,0.15),
+    55px 920px 0 0 rgba(255,255,255,0.3),
+    /* Right rail */
+    calc(100vw - 30px) 70px 0 0 rgba(255,255,255,0.25),
+    calc(100vw - 85px) 160px 0 0 rgba(255,255,255,0.3),
+    calc(100vw - 50px) 250px 0 0 rgba(56,189,248,0.2),
+    calc(100vw - 110px) 340px 0 0 rgba(255,255,255,0.2),
+    calc(100vw - 40px) 430px 0 0 rgba(255,255,255,0.25),
+    calc(100vw - 75px) 520px 0 0 rgba(56,189,248,0.15),
+    calc(100vw - 95px) 610px 0 0 rgba(255,255,255,0.3),
+    calc(100vw - 25px) 700px 0 0 rgba(255,255,255,0.2),
+    calc(100vw - 60px) 790px 0 0 rgba(56,189,248,0.2),
+    calc(100vw - 100px) 880px 0 0 rgba(255,255,255,0.15);
+}
+
+/* Near stars — brighter, 4s twinkle with offset delay */
+.ambient-stars--near {
+  animation: twinkle-near 4s ease-in-out 1.5s infinite;
+  box-shadow:
+    /* Left rail */
+    50px 90px 0 1px rgba(255,255,255,0.5),
+    18px 200px 0 0 rgba(56,189,248,0.45),
+    85px 350px 0 1px rgba(255,255,255,0.55),
+    40px 500px 0 0 rgba(255,255,255,0.4),
+    70px 680px 0 1px rgba(56,189,248,0.4),
+    25px 850px 0 0 rgba(255,255,255,0.5),
+    /* Right rail */
+    calc(100vw - 55px) 120px 0 1px rgba(255,255,255,0.5),
+    calc(100vw - 90px) 280px 0 0 rgba(56,189,248,0.4),
+    calc(100vw - 35px) 450px 0 1px rgba(255,255,255,0.55),
+    calc(100vw - 70px) 600px 0 0 rgba(255,255,255,0.45),
+    calc(100vw - 105px) 760px 0 1px rgba(56,189,248,0.4),
+    calc(100vw - 45px) 900px 0 0 rgba(255,255,255,0.5);
+}
+
+@keyframes twinkle-far {
+  0%, 100% { opacity: 0.6; }
+  50%      { opacity: 1; }
+}
+@keyframes twinkle-near {
+  0%, 100% { opacity: 0.5; }
+  50%      { opacity: 1; }
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   LIGHT MODE — Circuit-trace screensaver
+   REDESIGN: replaces the old static 8-bit sprites.
+   A glowing line draws itself along a fixed circuit path
+   in each rail, pauses, then loops. Classic screensaver.
+   ═══════════════════════════════════════════════════════ */
+
+.ambient-trace {
+  position: fixed;
+  top: 0;
+  width: 80px;
+  height: 100vh;
+  opacity: 0.4;             /* ambient, not attention-grabbing */
+}
+
+.ambient-trace svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ambient-trace--left  { left: 20px; }
+.ambient-trace--right { right: 20px; }
+
+/* The trace line: draws itself via stroke-dasharray/dashoffset.
+   Total path length ~900 units — set dasharray to match.
+   TUNING: change 8s duration for speed, 900 for path length. */
+.trace-line {
+  stroke: #38bdf8;          /* cyber-blue accent */
+  stroke-dasharray: 900;
+  stroke-dashoffset: 900;
+  animation: trace-draw 8s linear infinite;
+  filter: drop-shadow(0 0 3px rgba(56, 189, 248, 0.4));
+}
+
+/* Stagger right rail so they don't sync */
+.ambient-trace--right .trace-line {
+  animation-delay: 4s;
+}
+
+/* Junction dots glow in after the trace passes */
+.trace-dot {
+  fill: #38bdf8;
+  opacity: 0;
+  animation: dot-appear 8s linear infinite;
+}
+
+/* Stagger each dot slightly along the draw */
+.trace-dot:nth-child(2) { animation-delay: 1.5s; }
+.trace-dot:nth-child(3) { animation-delay: 3s; }
+.trace-dot:nth-child(4) { animation-delay: 4.5s; }
+.trace-dot:nth-child(5) { animation-delay: 5.5s; }
+.trace-dot:nth-child(6) { animation-delay: 6.5s; }
+
+.ambient-trace--right .trace-dot:nth-child(2) { animation-delay: 5.5s; }
+.ambient-trace--right .trace-dot:nth-child(3) { animation-delay: 7s; }
+.ambient-trace--right .trace-dot:nth-child(4) { animation-delay: 8.5s; }
+.ambient-trace--right .trace-dot:nth-child(5) { animation-delay: 9.5s; }
+.ambient-trace--right .trace-dot:nth-child(6) { animation-delay: 10.5s; }
+
+/* Draw → hold → fade → reset */
+@keyframes trace-draw {
+  0%   { stroke-dashoffset: 900; opacity: 0.6; }
+  70%  { stroke-dashoffset: 0;   opacity: 0.8; }
+  85%  { stroke-dashoffset: 0;   opacity: 0.8; }
+  100% { stroke-dashoffset: 0;   opacity: 0; }
+}
+
+@keyframes dot-appear {
+  0%, 10%  { opacity: 0; r: 1; }
+  20%      { opacity: 1; r: 2.5; }
+  85%      { opacity: 0.8; r: 2; }
+  100%     { opacity: 0; r: 1; }
+}
+
+
+/* ═══════════════════════════════════════════════════════
+   Reduced Motion — freeze on static frame
+   ═══════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  .ambient-stars--far,
+  .ambient-stars--near {
+    animation: none !important;
+  }
+
+  /* Show trace as a static visible line */
+  .trace-line {
+    animation: none !important;
+    stroke-dashoffset: 0;
+    opacity: 0.4;
+  }
+  .trace-dot {
+    animation: none !important;
+    opacity: 0.5;
+  }
+}
