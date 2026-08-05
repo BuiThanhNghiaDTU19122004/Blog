@@ -4,7 +4,7 @@
 // ponytail: one file, no extra deps, all animation via CSS classes.
 
 import React from 'react'
-import type { ContributionLevel, ContributionDay, ContributionWeek } from '@/lib/github'
+import type { ContributionLevel, ContributionWeek } from '@/lib/github'
 import './HeatmapAnimations.css'
 
 interface HeatmapGridProps {

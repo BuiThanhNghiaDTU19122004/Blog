@@ -2,6 +2,7 @@
 
 import React from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 
 export function DesktopSidebar() {
@@ -55,13 +56,14 @@ export function DesktopSidebar() {
       </Link>
 
       <Link href={githubPath} title="GitHub Activity" className={getItemClass(isGithubActive)}>
-        <img
+        <Image
           src="/images/ambient/github_octocat_8bit.png"
           alt="GitHub"
           width={28}
           height={28}
           className="filter drop-shadow"
           style={{ imageRendering: 'pixelated' }}
+          unoptimized
         />
         <span className={getLabelClass(isGithubActive)}>
           GitHub
