@@ -133,7 +133,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
               01. ABOUT
             </h2>
             <p className="font-sans text-sm sm:text-base text-[var(--text-main)] leading-relaxed">
-              Graduated Software Engineering student (CMU-based program, Duy Tan University — GPA 3.93/4.0) currently deep in AWS, Terraform, and Kubernetes. I'd rather learn a deployment pipeline by building one than by reading about it — GitOps, canary deployments, cost circuit breakers, the works. Currently looking for an entry-level DevOps / Cloud Operations role.
+              Graduated Software Engineering student (CMU-based program, Duy Tan University — GPA 3.93/4.0) currently deep in AWS, Terraform, and Kubernetes. I&apos;d rather learn a deployment pipeline by building one than by reading about it — GitOps, canary deployments, cost circuit breakers, the works. Currently looking for an entry-level DevOps / Cloud Operations role.
             </p>
           </section>
 
