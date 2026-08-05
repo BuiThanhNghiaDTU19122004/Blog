@@ -20,17 +20,15 @@ export function DesktopSidebar() {
   const isGithubActive = pathname.startsWith(`/${locale}/github`)
 
   const getItemClass = (isActive: boolean) => {
-    return `flex flex-col items-center justify-center p-1 sm:p-1.5 rounded text-white text-center group cursor-pointer w-14 sm:w-16 transition-colors focus:bg-[var(--accent-primary)] focus:border focus:border-dashed focus:border-white ${
-      isActive
+    return `flex flex-col items-center justify-center p-1 sm:p-1.5 rounded text-white text-center group cursor-pointer w-14 sm:w-16 transition-colors focus:bg-[var(--accent-primary)] focus:border focus:border-dashed focus:border-white ${isActive
         ? 'bg-[var(--accent-primary)] border border-dashed border-white shadow-inner font-bold'
         : 'hover:bg-white/20 border border-transparent'
-    }`
+      }`
   }
 
   const getLabelClass = (isActive: boolean) => {
-    return `text-[10px] leading-tight font-semibold lg:text-white text-center break-words max-w-full px-0.5 mt-0.5 ${
-      isActive ? 'text-white underline' : 'text-[var(--text-main)] group-hover:underline'
-    }`
+    return `text-[10px] leading-tight font-semibold lg:text-white text-center break-words max-w-full px-0.5 mt-0.5 ${isActive ? 'text-white underline' : 'text-[var(--text-main)] group-hover:underline'
+      }`
   }
 
   return (
@@ -57,7 +55,14 @@ export function DesktopSidebar() {
       </Link>
 
       <Link href={githubPath} title="GitHub Activity" className={getItemClass(isGithubActive)}>
-        <span className="text-2xl sm:text-3xl filter drop-shadow">🌐</span>
+        <img
+          src="/images/ambient/github_octocat_8bit.png"
+          alt="GitHub"
+          width={28}
+          height={28}
+          className="filter drop-shadow"
+          style={{ imageRendering: 'pixelated' }}
+        />
         <span className={getLabelClass(isGithubActive)}>
           GitHub
         </span>
