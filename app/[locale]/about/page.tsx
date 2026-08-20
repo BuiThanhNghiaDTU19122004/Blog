@@ -2,27 +2,15 @@ import Link from 'next/link'
 import { Window } from '@/components/win98/Window'
 import { getDictionary } from '@/lib/i18n/dictionary'
 import { ExperienceItem } from '@/components/win98/ExperienceItem'
+import { ProfileHeader } from '@/components/win98/ProfileHeader'
+import { TechStackGrid } from '@/components/win98/TechStackGrid'
+import { EducationSection } from '@/components/win98/EducationSection'
 
 interface AboutPageProps {
   params: Promise<{ locale: string }>
 }
 
 // ponytail: static dataset matching terminal/file-card about page structure
-const skills = [
-  'AWS',
-  'Terraform',
-  'Docker',
-  'Kubernetes',
-  'Argo CD',
-  'GitHub Actions',
-  'Prometheus',
-  'Grafana',
-  'PostgreSQL',
-  'Python',
-  'JavaScript',
-  'Java',
-]
-
 const projects = [
   {
     fileId: 'FILE_1',
@@ -59,30 +47,13 @@ const projects = [
   },
 ]
 
-const experiences = [
-  {
-    title: 'CloudOps / DevOps Intern',
-    companyLocation: 'Xbrain, Da Nang, Vietnam',
-    dateRange: 'Apr 2026 – Jul 2026',
-    details:
-      'Acquired foundational knowledge across AWS CloudOps services, focusing on architecture and system design best practices. Studied and practiced core Kubernetes concepts, automated GitOps workflows, and canary deployment strategies.',
-  },
-  {
-    title: 'Graduation Internship — Team Lead',
-    companyLocation: 'Kaopiz Holdings, Da Nang, Vietnam',
-    dateRange: 'Sep 2025 – Dec 2025',
-    details:
-      'Led a 4-member Agile/Scrum team designing and developing EZPark, a smart-parking app, through Daily Scrum, Sprint Planning, and Retrospectives. Collaborated on system architecture and implemented backend RESTful APIs and database integration.',
-  },
-]
-
 export default async function AboutPage({ params }: AboutPageProps) {
   const { locale } = await params
   const dict = getDictionary(locale)
 
   return (
     <Window
-      title={`User Profile - [Bui Thanh Nghia (Arti) - profile.exe]`}
+      title={dict.profileTitle ?? `User Profile - [Bui Thanh Nghia (Arti) - profile.exe]`}
       icon="👤"
       address={`C:\\Blog\\User\\BuiThanhNghia\\profile.exe`}
       statusText={`${dict.systemStatus} | System Memory: 640KB OK`}
@@ -92,7 +63,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
         <div className="flex flex-wrap items-center justify-between gap-2 border-b border-gray-400 pb-3 font-win98">
           <Link
             href={`/${locale}`}
-            className="inline-flex items-center gap-1 px-3 py-1 text-xs font-bold border-2 border-t-white border-l-white border-b-black border-r-black bg-[var(--bg-surface)] active:border-black hover:bg-[var(--bg-surface-subtle)] no-underline text-[var(--text-main)]"
+            className="inline-flex items-center gap-1 px-3 py-1 text-xs font-bold border-2 border-t-white border-l-white border-b-black border-r-black bg-[var(--bg-surface)] active:border-black hover:bg-[var(--bg-surface-subtle)] no-underline text-[var(--text-main)] transition-colors"
           >
             <span>⬅️</span>
             <span>{dict.backToExplorer}</span>
@@ -100,64 +71,45 @@ export default async function AboutPage({ params }: AboutPageProps) {
 
           <div className="flex items-center gap-2 text-xs font-mono text-gray-700 dark:text-gray-300">
             <span className="bg-[var(--bg-surface)] border border-gray-500 px-2 py-0.5 shadow-inner text-[var(--text-main)] font-bold">
-              USER: BUI THANH NGHIA (ARTI)
+              {dict.profileUserLabel ?? 'USER: BUI THANH NGHIA (ARTI)'}
             </span>
           </div>
         </div>
 
         {/* Main Terminal Content Box */}
         <div className="bg-[var(--bg-surface-inset)] border-2 border-gray-800 border-t-gray-900 border-l-gray-900 p-4 sm:p-6 shadow-inner space-y-8 font-mono">
-          {/* Profile Name Banner */}
-          <div className="flex flex-wrap items-center justify-between gap-4 border-2 border-gray-400 dark:border-gray-700 pb-4 bg-[var(--bg-surface-subtle)] p-4 shadow-sm">
-            <div className="flex items-center gap-3">
-              <span className="text-3xl select-none">💻</span>
-              <div>
-                <h1 className="text-xl sm:text-2xl font-bold font-mono text-[var(--accent-primary)]">
-                  Bui Thanh Nghia <span className="text-sm sm:text-base text-[var(--accent-secondary)] font-normal">(Arti)</span>
-                </h1>
-                <p className="text-xs sm:text-sm font-mono text-[var(--text-muted)] mt-0.5">
-                  Software Engineering &amp; CloudOps / DevOps Engineer
-                </p>
-              </div>
-            </div>
-            <div className="flex items-center gap-2 font-mono text-xs">
-              <span className="bg-[var(--bg-surface)] border border-gray-500 px-2 py-1 shadow-inner text-[var(--text-main)] font-bold">
-                STATUS: ACTIVE_SEEKER
-              </span>
-            </div>
-          </div>
+          {/* 1. Profile Header with subtle premium polish */}
+          <ProfileHeader
+            name={dict.profileName ?? 'Bui Thanh Nghia'}
+            nickname={dict.profileNickname ?? '(Arti)'}
+            role={dict.profileRole ?? 'Software Engineering & CloudOps / DevOps Engineer'}
+            status={dict.profileStatus ?? 'STATUS: ACTIVE_SEEKER'}
+          />
 
           {/* 01. ABOUT */}
           <section className="space-y-3">
             <h2 className="text-lg sm:text-xl font-bold font-mono text-[var(--accent-primary)] border-b-2 border-gray-400 dark:border-gray-700 pb-1">
-              01. ABOUT
+              {dict.sectionAbout ?? '01. ABOUT'}
             </h2>
-            <p className="font-sans text-sm sm:text-base text-[var(--text-main)] leading-relaxed">
-              Graduated Software Engineering student (CMU-based program, Duy Tan University — GPA 3.93/4.0) currently deep in AWS, Terraform, and Kubernetes. I&apos;d rather learn a deployment pipeline by building one than by reading about it — GitOps, canary deployments, cost circuit breakers, the works. Currently looking for an entry-level DevOps / Cloud Operations role.
-            </p>
-          </section>
-
-          {/* 02. SKILLS */}
-          <section className="space-y-3">
-            <h2 className="text-lg sm:text-xl font-bold font-mono text-[var(--accent-primary)] border-b-2 border-gray-400 dark:border-gray-700 pb-1">
-              02. SKILLS
-            </h2>
-            <div className="border-2 border-gray-400 dark:border-gray-600 p-4 bg-[var(--bg-surface-subtle)] shadow-sm flex flex-wrap gap-2">
-              {skills.map((skill) => (
-                <span
-                  key={skill}
-                  className="text-xs font-mono bg-[#c0c0c0] dark:bg-[var(--bg-surface-card)] text-black dark:text-[var(--text-main)] font-bold px-2.5 py-1 border border-gray-600 uppercase tracking-wider shadow-xs"
-                >
-                  {skill}
-                </span>
+            <div className="font-sans text-sm sm:text-base text-[var(--text-main)] leading-relaxed space-y-3">
+              {dict.aboutParagraphs.map((paragraph, pIdx) => (
+                <p key={pIdx}>{paragraph}</p>
               ))}
             </div>
+          </section>
+
+          {/* 02. TECH STACK — Categorized with Muted Accent Palettes */}
+          <section className="space-y-3">
+            <h2 className="text-lg sm:text-xl font-bold font-mono text-[var(--accent-primary)] border-b-2 border-gray-400 dark:border-gray-700 pb-1">
+              {dict.sectionSkills ?? '02. TECH STACK'}
+            </h2>
+            <TechStackGrid categories={dict.techCategories} />
           </section>
 
           {/* 03. PROJECTS */}
           <section className="space-y-4">
             <h2 className="text-lg sm:text-xl font-bold font-mono text-[var(--accent-primary)] border-b-2 border-gray-400 dark:border-gray-700 pb-1">
-              03. PROJECTS
+              {dict.sectionProjects ?? '03. PROJECTS'}
             </h2>
 
             {/* Timeline container */}
@@ -201,7 +153,7 @@ export default async function AboutPage({ params }: AboutPageProps) {
                         rel="noreferrer"
                         className="inline-flex items-center gap-1 font-mono font-bold text-xs text-[var(--accent-primary)] hover:underline"
                       >
-                        <span>&gt;&gt; SOURCE CODE</span>
+                        <span>{dict.sourceCodeBtn ?? '>> SOURCE CODE'}</span>
                       </a>
                     </div>
                   </div>
@@ -213,46 +165,31 @@ export default async function AboutPage({ params }: AboutPageProps) {
           {/* 04. EXPERIENCE */}
           <section className="space-y-4">
             <h2 className="text-lg sm:text-xl font-bold font-mono text-[var(--accent-primary)] border-b-2 border-gray-400 dark:border-gray-700 pb-1">
-              04. EXPERIENCE
+              {dict.sectionExperience ?? '04. EXPERIENCE'}
             </h2>
 
             <div className="space-y-4">
-              {experiences.map((exp) => (
+              {dict.experiences.map((exp) => (
                 <ExperienceItem
                   key={exp.title + exp.companyLocation}
                   title={exp.title}
                   companyLocation={exp.companyLocation}
                   dateRange={exp.dateRange}
-                  details={exp.details}
+                  bullets={exp.bullets}
+                  toggleShowText={dict.experienceDetailsShow}
+                  toggleHideText={dict.experienceDetailsHide}
                 />
               ))}
             </div>
           </section>
 
-          {/* 05. EDUCATION */}
-          <section className="space-y-3">
+          {/* 05. EDUCATION & CERTS — Dual Card Showcase */}
+          <section className="space-y-4">
             <h2 className="text-lg sm:text-xl font-bold font-mono text-[var(--accent-primary)] border-b-2 border-gray-400 dark:border-gray-700 pb-1">
-              05. EDUCATION
+              {dict.sectionEducation ?? '05. EDUCATION & CERTS'}
             </h2>
 
-            <div className="border-2 border-gray-700 border-l-4 border-l-[var(--accent-primary)] p-4 sm:p-5 bg-[var(--bg-surface-card)] shadow-sm space-y-2 font-mono">
-              <div className="flex flex-wrap items-start justify-between gap-2 border-b border-gray-300 dark:border-gray-700 pb-2">
-                <div>
-                  <h3 className="font-bold text-sm sm:text-base text-[var(--text-main)]">
-                    Duy Tan University (CMU-based program)
-                  </h3>
-                  <p className="text-xs text-[var(--accent-primary)] font-semibold mt-0.5">
-                    Bachelor of Science in Software Engineering
-                  </p>
-                </div>
-                <span className="text-xs text-[var(--text-muted)] bg-[var(--bg-surface-subtle)] px-2 py-0.5 border border-gray-500">
-                  2022 – 2026
-                </span>
-              </div>
-              <div className="font-sans text-xs sm:text-sm text-[var(--text-muted)] pt-1 leading-relaxed">
-                GPA 3.93/4.0 • Excellence Scholarship (Years 1, 2, 3) • TOEIC 950/990 • Encouragement Prize, Student Scientific Research Conference 2025
-              </div>
-            </div>
+            <EducationSection data={dict.educationData} />
           </section>
         </div>
       </div>

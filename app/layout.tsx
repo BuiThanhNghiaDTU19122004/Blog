@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import {
   Plus_Jakarta_Sans,
   Space_Grotesk,
-  Fira_Code,
+  JetBrains_Mono,
   Pixelify_Sans,
   Press_Start_2P,
 } from 'next/font/google'
@@ -11,7 +11,7 @@ import { DesktopLayout } from '@/components/win98/DesktopLayout'
 import { ThemeProvider } from '@/components/ThemeProvider'
 
 const jakartaSans = Plus_Jakarta_Sans({
-  subsets: ['latin'],
+  subsets: ['latin', 'vietnamese'],
   variable: '--font-sans',
   display: 'swap',
 })
@@ -22,14 +22,14 @@ const spaceGrotesk = Space_Grotesk({
   display: 'swap',
 })
 
-const firaCode = Fira_Code({
-  subsets: ['latin'],
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin', 'vietnamese'],
   variable: '--font-mono',
   display: 'swap',
 })
 
 const pixelify = Pixelify_Sans({
-  subsets: ['latin'],
+  subsets: ['latin', 'latin-ext'],
   variable: '--font-win98',
   display: 'swap',
 })
@@ -51,7 +51,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${jakartaSans.variable} ${spaceGrotesk.variable} ${firaCode.variable} ${pixelify.variable} ${pressStart2P.variable}`}
+      className={`${jakartaSans.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} ${pixelify.variable} ${pressStart2P.variable}`}
     >
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
